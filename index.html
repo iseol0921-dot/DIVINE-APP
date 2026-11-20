@@ -216,10 +216,10 @@ const KEY = "divine-app-v6";
 
 const CATS = [
   {id:"prop", label:"영화·드라마·광고 소품차량", home:"소품차량"},
+  {id:"special", label:"특수차량", home:"특수차량"},
   {id:"classic", label:"클래식카", home:"클래식카"},
   {id:"super", label:"슈퍼카", home:"슈퍼카"},
   {id:"vip", label:"의전차량", home:"의전차량"},
-  {id:"special", label:"특수차량", home:"특수차량"},
   {id:"make", label:"차량제작문의", home:"제작문의", inquiry:true}
 ];
 const CAR_CATS = CATS.filter(c=>!c.inquiry);
@@ -373,7 +373,7 @@ const priceTag = c => `${man(c.rent)}${c.rent!=null?"<small>/ "+(c.hours||"6시�
 const lrow = c => `<button class="lrow" data-open="${c.id}"><span class="ph">${studio(c)}</span><span class="tx"><span class="lab">${esc(c.sub)}</span><span class="nm">${esc(c.name)}</span><span class="pr num" style="display:block">${priceTag(c)}</span></span></button>`;
 
 function vHome(){
-  const pick = ["prop","classic","super","vip","special"].map(id=>({id, list:db.cars.filter(c=>c.cat===id)}));
+  const pick = ["prop","special","classic","super","vip"].map(id=>({id, list:db.cars.filter(c=>c.cat===id)}));
   return `<header class="hd pad"><div class="logo"><img src="${LOGO}" alt="DIVINE"></div><button class="more" data-act="cart" style="color:var(--fg)">예약함${db.cart.length?` <b class=\"num\">${db.cart.length}</b>`:""}</button></header>
   <div class="pad">
     <label class="search">${ic(IC.search)}<input id="homeq" type="search" placeholder="차종으로 찾기 (예: 그랜저, 포니, 롤스로이스)" aria-label="차량 검색"></label>
