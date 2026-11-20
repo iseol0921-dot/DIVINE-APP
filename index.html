@@ -1,0 +1,717 @@
+<title>디바인 차량 카탈로그</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: white mobile column (max 480px), list rows + hairlines, black as the action colour, Kakao yellow only for the chat banner. */
+:root{
+  --bg:#ffffff; --gray:#f5f5f5; --line:#ececec; --fg:#141414; --sub:#6b6b6b; --muted:#a6a6a6; --kakao:#fee500; --kakao-ink:#191600;
+  --f:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Malgun Gothic","Noto Sans KR",sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--f);font-size:14px;line-height:1.5;letter-spacing:-.02em;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit;letter-spacing:inherit}
+button{cursor:pointer;background:none;border:0;padding:0;text-align:inherit}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+.app{max-width:480px;margin:0 auto;min-height:100%;background:var(--bg);padding-bottom:calc(60px + env(safe-area-inset-bottom,0px))}
+@media (min-width:500px){.app{border-left:1px solid var(--line);border-right:1px solid var(--line)}}
+.pad{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.hd{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background:var(--bg);display:flex;align-items:center;gap:6px;height:50px}
+.hd.line{border-bottom:1px solid var(--line)}
+.hd h1{font-size:17px;font-weight:600;margin:0;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hd .ib{width:36px;height:36px;display:grid;place-items:center;margin:0 -6px}
+.logo{flex:1}.logo img{height:20px;display:block}
+
+.tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;z-index:8;background:var(--bg);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding-bottom:env(safe-area-inset-bottom,0px)}
+.tabbar button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 0 6px;font-size:10px;color:#b0b0b0;position:relative}
+.tabbar button[aria-current="page"]{color:var(--fg)}
+.tabbar .dot{position:absolute;top:5px;left:calc(50% + 7px);min-width:15px;height:15px;border-radius:8px;background:var(--fg);color:#fff;font-size:10px;line-height:15px;text-align:center;padding:0 4px}
+
+.h3{font-size:16px;font-weight:600;margin:0}
+.sub{color:var(--sub)} .muted{color:var(--muted)} .small{font-size:12px}
+.num{font-variant-numeric:tabular-nums}
+.gap{height:10px;background:var(--gray);margin-block:22px}
+.sec{padding-top:26px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.more{font-size:13px;color:var(--sub);display:inline-flex;align-items:center}
+.more svg{width:14px;height:14px}
+.btn{display:flex;align-items:center;justify-content:center;gap:6px;height:50px;border-radius:4px;font-weight:600;font-size:15px;width:100%}
+.btn.pri{background:var(--fg);color:#fff}
+.btn.out{border:1px solid #d4d4d4;background:var(--bg)}
+.btn.sm{height:38px;font-size:13px;font-weight:500;width:auto;padding:0 14px}
+.btn:disabled{background:#dcdcdc;color:#fff;cursor:not-allowed}
+.req{font-size:11px;color:#d33;margin-left:3px}
+.lbl{display:block;font-size:13px;color:var(--sub);margin-bottom:6px}
+.in{width:100%;min-width:0;height:46px;border:1px solid #dadada;border-radius:4px;padding:0 12px;background:var(--bg);font-size:15px}
+textarea.in{height:auto;min-height:92px;padding:11px 12px;resize:vertical}
+.in:focus{border-color:var(--fg);outline:none}
+.in::placeholder{color:#bdbdbd}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fl{display:flex;flex-direction:column;gap:16px}
+.err{color:#d33;font-size:13px;margin:12px 0 0;min-height:1em}
+.note{font-size:12px;color:var(--muted);margin:10px 0 0;line-height:1.6}
+
+.utabs{display:flex;gap:18px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line)}
+.utabs::-webkit-scrollbar{display:none}
+.utabs button{flex:none;padding:11px 0 10px;font-size:15px;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.utabs button[aria-selected="true"]{color:var(--fg);font-weight:600;border-color:var(--fg)}
+.subs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-top:12px}
+.subs::-webkit-scrollbar{display:none}
+.subs button{flex:none;height:32px;padding:0 12px;border:1px solid #dedede;border-radius:16px;font-size:13px;color:var(--sub);white-space:nowrap}
+.subs button[aria-pressed="true"]{background:var(--fg);border-color:var(--fg);color:#fff}
+
+/* studio photo */
+.ph{position:relative;overflow:hidden;display:block;width:100%;background:radial-gradient(120% 90% at 50% 30%,#ffffff 0%,#f3f3f3 55%,#e4e4e4 100%)}
+.ph::before{content:"";position:absolute;left:0;right:0;bottom:0;height:30%;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.035) 100%)}
+.ph .car{position:absolute;inset:10% 6% 8%;display:block}
+.ph .car img,.ph .car svg{width:100%;height:100%;object-fit:contain;display:block;position:relative}
+.ph .car::after{content:"";position:absolute;left:12%;right:12%;bottom:2%;height:8%;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.28),rgba(0,0,0,0));z-index:0}
+.ph .car>*{z-index:1}
+.ph .tint{position:absolute;inset:0;z-index:2;mix-blend-mode:color;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center}
+.ph .wait{display:none;position:absolute;right:12px;bottom:10px;font-size:11px;color:#b5b5b5;z-index:3}
+.gal .wait{display:block}
+
+/* kakao banner */
+.kakao{display:flex;align-items:center;gap:12px;background:var(--kakao);color:var(--kakao-ink);border-radius:6px;padding:14px 16px}
+.kakao .bub{width:36px;height:36px;border-radius:50%;background:var(--kakao-ink);display:grid;place-items:center;flex:none}
+.kakao .bub svg{width:20px;height:20px;fill:var(--kakao);stroke:none}
+.kakao b{display:block;font-size:15px;font-weight:700;word-break:keep-all}
+.kakao span span{font-size:12px;opacity:.75}
+.kakao .go{margin-left:auto;font-size:12px;font-weight:600;white-space:nowrap}
+
+/* home */
+.catrow{display:grid;grid-template-columns:repeat(5,1fr);gap:2px}
+.catrow button{display:flex;flex-direction:column;align-items:center;gap:7px;font-size:12px;line-height:1.3;text-align:center;word-break:keep-all}
+.catrow .ic{width:52px;height:52px;border-radius:14px;background:var(--gray);display:grid;place-items:center}
+.catrow .ic svg{width:28px;height:28px;stroke-width:1.3}
+.search{display:flex;align-items:center;gap:8px;height:44px;border-radius:4px;background:var(--gray);padding:0 12px}
+.search input{flex:1;min-width:0;border:0;background:transparent;outline:none;font-size:15px}
+.search svg{color:var(--muted);width:19px;height:19px}
+.hs{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;margin-top:12px}
+.hs::-webkit-scrollbar{display:none}
+.hcard{flex:none;width:160px}
+.hcard .ph{aspect-ratio:4/3;border-radius:4px}
+
+/* list rows */
+.lrow{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line);width:100%;align-items:center}
+.lrow .ph{width:120px;aspect-ratio:4/3;border-radius:4px;flex:none}
+.lrow .tx{flex:1;min-width:0}
+.lab{font-size:12px;color:var(--muted)}
+.nm{font-size:15px;font-weight:500;line-height:1.4;margin-top:1px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pr{font-size:16px;font-weight:700;margin-top:4px}
+.pr small{font-size:12px;font-weight:400;color:var(--sub);margin-left:2px}
+.empty{padding:60px 0;text-align:center;color:var(--muted)}
+
+/* detail */
+.gal{aspect-ratio:4/3}
+.swatch{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding-block:14px 2px}
+.swatch::-webkit-scrollbar{display:none}
+.swatch button,.swatch label{flex:none;width:30px;height:30px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.14);position:relative}
+.swatch button[aria-pressed="true"]::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1.5px solid var(--fg)}
+.swatch .orig{background:conic-gradient(#e33,#fc3,#3c6,#39f,#93f,#e33)}
+.swatch label{display:grid;place-items:center;background:var(--bg);color:var(--sub);cursor:pointer}
+.swatch label svg{width:16px;height:16px}
+.swatch label input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.dt h2{font-size:21px;font-weight:700;margin:4px 0 0;line-height:1.4}
+.price-l{display:flex;align-items:baseline;gap:4px;margin-top:14px}
+.price-l b{font-size:24px;font-weight:700}
+.tbl{width:100%;border-collapse:collapse;font-size:14px;margin-top:12px}
+.tbl th{font-weight:400;color:var(--sub);text-align:left;padding:10px 0;border-bottom:1px solid var(--line);width:42%}
+.tbl td{padding:10px 0;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums}
+.terms{margin:12px 0 0;padding:0;list-style:none;font-size:13px;color:#444;line-height:1.65}
+.terms li{padding-left:10px;position:relative;margin-bottom:6px}
+.terms li::before{content:"";position:absolute;left:0;top:.7em;width:3px;height:3px;border-radius:50%;background:#999}
+.bot{position:sticky;bottom:calc(60px + env(safe-area-inset-bottom,0px));z-index:5;background:var(--bg);border-top:1px solid var(--line);display:flex;gap:8px;padding-block:8px;margin-top:26px}
+.bot .favb{width:50px;flex:none;border:1px solid #d4d4d4;border-radius:4px;display:grid;place-items:center}
+.bot .favb[aria-pressed="true"] svg{fill:currentColor}
+
+/* design */
+.cv{aspect-ratio:16/10}
+.seg{display:grid;grid-template-columns:repeat(2,1fr);border:1px solid #d4d4d4;border-radius:4px;overflow:hidden;margin-top:16px}
+.seg button{height:40px;font-size:14px;color:var(--sub);text-align:center}
+.seg button+button{border-left:1px solid #d4d4d4}
+.seg button[aria-selected="true"]{background:var(--fg);color:#fff;font-weight:600}
+.up{display:flex;align-items:center;justify-content:center;gap:8px;height:92px;border:1px dashed #cfcfcf;border-radius:4px;color:var(--sub);font-size:13px;position:relative;margin-top:10px;cursor:pointer}
+.up input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.up img{max-height:60px}
+.chk{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);font-size:14px;cursor:pointer}
+.chk input{width:19px;height:19px;accent-color:var(--fg);margin:0}
+.chk span{flex:1}
+.sw{position:relative;width:44px;height:26px;flex:none;display:inline-block}
+.sw input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer;z-index:1}
+.sw i{position:absolute;inset:0;border-radius:13px;background:#d9d9d9;transition:.15s}
+.sw i::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2);transition:.15s}
+.sw input:checked+i{background:var(--fg)}
+.sw input:checked+i::after{left:21px}
+
+/* inquiry */
+.ci{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);align-items:center}
+.ci .ph{width:72px;aspect-ratio:4/3;border-radius:4px;flex:none}
+.ci .tx{flex:1;min-width:0;font-size:14px}
+.ci .tx p{margin:1px 0;font-size:12px;color:var(--muted)}
+.ci .x{color:var(--muted);width:28px;height:28px;display:grid;place-items:center}
+.ci .x svg{width:17px;height:17px}
+.tg{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.tg>span:first-child{flex:1;font-size:14px}
+.tg small{display:block;font-size:12px;color:var(--muted)}
+.opts{display:flex;gap:6px;flex-wrap:wrap}
+.opts button{height:36px;padding:0 13px;border:1px solid #dadada;border-radius:18px;font-size:13px;color:var(--sub)}
+.opts button[aria-pressed="true"]{border-color:var(--fg);color:var(--fg);font-weight:600;box-shadow:inset 0 0 0 1px var(--fg)}
+.sumbar{position:sticky;bottom:calc(60px + env(safe-area-inset-bottom,0px));z-index:5;background:var(--bg);border-top:1px solid var(--line);padding-block:10px;margin-top:26px}
+.sumbar .row{font-size:13px;margin-bottom:8px}
+.copy{display:flex;align-items:center;justify-content:space-between;padding:14px 0;font-size:15px;border-bottom:1px solid var(--line)}
+.copy b{user-select:all;font-weight:600}
+
+/* me / admin */
+.menu{margin:0;padding:0;list-style:none}
+.menu button,.menu a{display:flex;align-items:center;width:100%;padding:15px 0;border-bottom:1px solid var(--line);font-size:15px;gap:10px}
+.menu span{flex:1}
+.menu em{font-style:normal;font-size:13px;color:var(--muted)}
+.menu svg{width:16px;height:16px;color:var(--muted)}
+.qrow{padding:13px 0;border-bottom:1px solid var(--line);font-size:14px}
+.qrow .row{font-size:13px}
+.state{font-size:12px;font-weight:600}
+.week{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;margin-top:10px;border:1px solid var(--line);border-radius:4px;padding:10px 2px}
+.week small{font-size:11px;color:var(--muted)}
+.week .d{width:30px;height:30px;margin:5px auto 0;border-radius:50%;display:grid;place-items:center;font-size:14px}
+.week .d.today{background:var(--fg);color:#fff}
+.week i{display:block;height:14px;font-style:normal;font-size:10px;color:var(--sub)}
+.aq{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.aq .tx{flex:1;min-width:0;font-size:14px}
+.aq .tx p{margin:0;font-size:12px;color:var(--muted)}
+.aq select{border:1px solid #dadada;border-radius:4px;font-size:12px;padding:2px 4px;background:var(--bg)}
+.mini{display:flex;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);width:100%}
+.mini .ph{width:60px;aspect-ratio:4/3;border-radius:3px;flex:none}
+.mini .tx{flex:1;min-width:0;font-size:13px}
+.mini .tx small{display:block;color:var(--muted);font-size:12px}
+
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:20;display:flex;align-items:flex-end;justify-content:center}
+.sheet{width:100%;max-width:480px;max-height:92vh;overflow:auto;background:var(--bg);border-radius:10px 10px 0 0;padding-bottom:calc(20px + env(safe-area-inset-bottom,0px))}
+.sheet .hd{top:0}
+.pics{display:flex;gap:8px;flex-wrap:wrap}
+.pic{position:relative;width:80px;height:60px;border-radius:3px;overflow:hidden;background:var(--gray)}
+.pic img{width:100%;height:100%;object-fit:contain}
+.pic button{position:absolute;top:2px;right:2px;background:rgba(0,0,0,.6);color:#fff;font-size:11px;border-radius:3px;padding:0 5px}
+.toast{position:fixed;left:50%;bottom:calc(76px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:rgba(20,20,20,.92);color:#fff;padding:10px 16px;border-radius:4px;z-index:40;font-size:13px;white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="app" id="app"></div>
+<nav class="tabbar" id="tabbar" aria-label="하단 메뉴"></nav>
+<div id="modal" class="scrim" hidden></div>
+<div id="toast" class="toast" hidden role="status"></div>
+
+<script>
+/* ===== 설정 ===== */
+const LOGO = "data:image/png;base64,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";
+const KAKAO_URL = "https://pf.kakao.com/_yxgnus";
+const CONTACT = { phone:"010-0000-0000" };      // 대표 번호 받으면 교체
+const ADMIN_PIN = "0000";
+const KEY = "divine-app-v4";
+
+const CATS = [
+  {id:"prop", label:"영화·드라마·광고 소품차량", home:"소품차량"},
+  {id:"classic", label:"클래식카", home:"클래식카"},
+  {id:"super", label:"슈퍼카", home:"슈퍼카"},
+  {id:"vip", label:"의전차량", home:"의전차량"},
+  {id:"make", label:"차량제작문의", home:"제작문의", inquiry:true}
+];
+const CAR_CATS = CATS.filter(c=>!c.inquiry);
+const catLabel = id => CATS.find(c=>c.id===id)?.label || id;
+
+/* 2025 단가표 기준 (만원, VAT 별도) */
+const PRICE_DATA = [{"cat": "prop", "sub": "국산 소형", "name": "스파크 · 모닝 · 레이", "rent": 25, "single": 40, "km": "500원", "body": "small", "id": "v01"}, {"cat": "prop", "sub": "국산 준중형", "name": "아반떼 · K3 · 캐스퍼", "rent": 30, "single": 40, "km": "500원", "body": "sedan", "id": "v02"}, {"cat": "prop", "sub": "국산 중형", "name": "쏘나타 · K5", "rent": 35, "single": 45, "km": "500원", "body": "sedan", "id": "v03"}, {"cat": "prop", "sub": "국산 대형", "name": "K7(구형) · 그랜저(구형)", "rent": 40, "single": 50, "km": "500원", "body": "sedan", "id": "v04"}, {"cat": "prop", "sub": "국산 대형", "name": "에쿠스 · 체어맨 · K8 · 그랜저(신형) · 마티즈", "rent": 50, "single": 60, "km": "500원", "body": "sedan", "id": "v05"}, {"cat": "prop", "sub": "국산 대형", "name": "EQ900 · G80(구형)", "rent": 55, "single": 70, "km": "550원", "body": "sedan", "id": "v06"}, {"cat": "prop", "sub": "국산 대형", "name": "K9(신형) · G80(신형)", "rent": 60, "single": 75, "km": "600원", "body": "sedan", "id": "v07"}, {"cat": "prop", "sub": "국산 대형", "name": "G90(구형)", "rent": 70, "single": 85, "km": "700원", "body": "sedan", "id": "v08"}, {"cat": "prop", "sub": "국산 대형", "name": "GV80 · G90(신형) · K9(신형)", "rent": 90, "single": 110, "km": "900원", "body": "suv", "id": "v09"}, {"cat": "prop", "sub": "SUV", "name": "투싼 · 스포티지 · 니로", "rent": 35, "single": 40, "km": "500원", "body": "suv", "id": "v10"}, {"cat": "prop", "sub": "SUV", "name": "싼타페 · 쏘렌토 · 스포티지(신형) · 투싼(신형)", "rent": 40, "single": 50, "km": "500원", "body": "suv", "id": "v11"}, {"cat": "prop", "sub": "SUV", "name": "모하비 · 팰리세이드 · 쉐보레 콜로라도 · 투리스모", "rent": 50, "single": 60, "km": "500원", "body": "suv", "id": "v12"}, {"cat": "prop", "sub": "승합", "name": "카니발 · 스타렉스", "rent": 35, "single": 40, "km": "500원", "body": "van", "id": "v13"}, {"cat": "prop", "sub": "승합", "name": "카니발(신형) · 스타리아", "rent": 40, "single": 50, "km": "500원", "body": "van", "id": "v14"}, {"cat": "prop", "sub": "승합", "name": "카니발 하이리무진", "rent": 50, "single": 60, "km": "500원", "body": "van", "id": "v15"}, {"cat": "prop", "sub": "승합", "name": "현대 쏠라티 (15인승)", "rent": 60, "single": 75, "km": "1,000원", "body": "van", "id": "v16"}, {"cat": "prop", "sub": "화물", "name": "라보 · 다마스", "rent": 30, "single": 50, "km": "500원", "body": "van", "id": "v17"}, {"cat": "prop", "sub": "화물", "name": "1~1.5톤 카고트럭 · 탑차(윙탑 포함)", "rent": 40, "single": 50, "km": "1,000원", "body": "truck", "id": "v18"}, {"cat": "prop", "sub": "수입 중형", "name": "벤츠 C클래스 · 아우디 A4 · BMW 3시리즈 · 미니쿠퍼 · 벤츠 GLC · BMW X1 · 아우디 Q3", "rent": 70, "single": 85, "km": "700원", "body": "sedan", "id": "v19"}, {"cat": "prop", "sub": "수입 중형", "name": "벤츠 E클래스 · 아우디 A6 · BMW 5시리즈 · 머스탱 쿠페 · 테슬라 · BMW X3 · X4 · 아우디 Q5", "rent": 80, "single": 120, "km": "800원", "body": "sedan", "id": "v20"}, {"cat": "prop", "sub": "수입 중형", "name": "벤츠 CLS · 아우디 A7 · BMW 6시리즈 · 벤츠 GLE · BMW X5 · X6 · 아우디 Q7 · BMW M2 · M3 · M4", "rent": 100, "single": 130, "km": "1,000원", "body": "sedan", "id": "v21"}, {"cat": "prop", "sub": "특수차량", "name": "택시", "rent": 30, "single": 40, "km": "500원", "body": "taxi", "id": "v22"}, {"cat": "prop", "sub": "특수차량", "name": "모범택시", "rent": 40, "single": 50, "km": "500원", "body": "taxi", "id": "v23"}, {"cat": "prop", "sub": "특수차량", "name": "경찰차", "rent": 35, "single": 45, "km": "500원", "body": "police", "id": "v24"}, {"cat": "prop", "sub": "특수차량", "name": "경찰 승합", "rent": 38, "single": 45, "km": "500원", "body": "van", "id": "v25"}, {"cat": "prop", "sub": "특수차량", "name": "119 스타렉스 구급차 · 봉고 박스 사설 구급차", "rent": 80, "single": 100, "km": "1,400원", "body": "ambulance", "id": "v26"}, {"cat": "prop", "sub": "특수차량", "name": "사설 스타렉스 구급차", "rent": 70, "single": 80, "km": "700원", "body": "ambulance", "id": "v27"}, {"cat": "prop", "sub": "특수차량", "name": "소방차", "rent": 150, "single": 200, "km": "1,400원", "body": "truck", "id": "v28", "towOpt": 40}, {"cat": "prop", "sub": "특수차량", "name": "소방 화재조사차량 (지휘본부)", "rent": 50, "single": 100, "km": "500원", "body": "suv", "id": "v29"}, {"cat": "prop", "sub": "특수차량", "name": "특공대 SWAT", "rent": 150, "single": 200, "km": "1,400원", "body": "truck", "id": "v30", "towOpt": 40}, {"cat": "prop", "sub": "특수차량", "name": "마을버스", "rent": 60, "single": 80, "km": "1,400원", "body": "bus", "id": "v31"}, {"cat": "prop", "sub": "특수차량", "name": "시내버스", "rent": 80, "single": 100, "km": "1,400원", "body": "bus", "id": "v32"}, {"cat": "prop", "sub": "특수차량", "name": "광역버스", "rent": 100, "single": 120, "km": "1,400원", "body": "bus", "id": "v33"}, {"cat": "prop", "sub": "특수차량", "name": "공항버스 (리무진)", "rent": 100, "single": 120, "km": "1,400원", "body": "bus", "id": "v34"}, {"cat": "prop", "sub": "특수차량", "name": "호송 버스", "rent": 100, "single": 120, "km": "1,400원", "body": "bus", "id": "v35"}, {"cat": "prop", "sub": "특수차량", "name": "호송 카운티", "rent": 100, "single": 120, "km": "1,400원", "body": "bus", "id": "v36"}, {"cat": "prop", "sub": "특수차량", "name": "호송 승합", "rent": 50, "single": 100, "km": "1,400원", "body": "van", "id": "v37"}, {"cat": "prop", "sub": "특수차량", "name": "유치원 승합차", "rent": 40, "single": 70, "km": "500원", "body": "van", "id": "v38"}, {"cat": "prop", "sub": "특수차량", "name": "25인승 카운티 · 유치원 버스", "rent": 60, "single": 80, "km": "1,400원", "body": "bus", "id": "v39"}, {"cat": "prop", "sub": "특수차량", "name": "경찰 오토바이 (BMW)", "rent": 150, "single": 200, "km": "1,000원", "body": "bike", "id": "v40", "towOpt": 25}, {"cat": "prop", "sub": "특수차량", "name": "카캐리어 (차량 운송)", "rent": 40, "single": null, "km": "2,000원", "body": "truck", "id": "v41"}, {"cat": "prop", "sub": "특수차량", "name": "쓰레기차", "rent": 150, "single": 200, "km": "1,400원", "body": "truck", "id": "v42", "towOpt": 40}, {"cat": "prop", "sub": "특수차량", "name": "중계차", "rent": 120, "single": 150, "km": "1,200원", "body": "truck", "id": "v43", "towOpt": 40}, {"cat": "prop", "sub": "특수차량", "name": "오토바이 125cc 이하", "rent": 50, "single": 70, "km": "1,000원", "body": "bike", "id": "v44", "towOpt": 25}, {"cat": "prop", "sub": "특수차량", "name": "오토바이 125cc 이상", "rent": null, "single": null, "km": null, "body": "bike", "id": "v45"}, {"cat": "prop", "sub": "특수차량", "name": "2.5톤 이상 화물차", "rent": null, "single": 100, "km": null, "body": "truck", "id": "v46"}, {"cat": "prop", "sub": "특수차량", "name": "덤프트럭", "rent": null, "single": 150, "km": null, "body": "truck", "id": "v47", "towOpt": 40}, {"cat": "prop", "sub": "특수차량", "name": "군용차", "rent": null, "single": "100~200", "km": null, "body": "truck", "id": "v48", "towOpt": 40}, {"cat": "prop", "sub": "촬영 장비차량", "name": "더블캡 촬영 렉카", "rent": 70, "single": null, "km": null, "body": "truck", "labor": 30, "hours": "6시간", "addHour": "시간당 7만원", "note": "", "id": "v49"}, {"cat": "prop", "sub": "촬영 장비차량", "name": "슈팅카 F150", "rent": 120, "single": null, "km": null, "body": "truck", "labor": 30, "hours": "6시간", "addHour": "", "note": "", "id": "v50"}, {"cat": "prop", "sub": "촬영 장비차량", "name": "미니 슈팅카 (전기차)", "rent": 100, "single": null, "km": null, "body": "suv", "labor": 30, "hours": "6시간", "addHour": "", "note": "무소음", "id": "v51"}, {"cat": "prop", "sub": "촬영 장비차량", "name": "초소형 전기차 트위지 (차폭 120cm)", "rent": 70, "single": null, "km": null, "body": "small", "labor": 30, "hours": "6시간", "addHour": "", "note": "무소음", "id": "v52"}, {"cat": "prop", "sub": "촬영 장비차량", "name": "오프로드 슈팅카 (4인승 · 4륜)", "rent": 160, "single": null, "km": null, "body": "truck", "labor": 30, "hours": "6시간", "addHour": "시간당 10만원", "note": "", "id": "v53"}, {"cat": "prop", "sub": "촬영 장비차량", "name": "슈팅카 + 말더미", "rent": 300, "single": null, "km": null, "body": "truck", "labor": 30, "hours": "8시간", "addHour": "시간당 15만원", "note": "보조인력 필수", "id": "v54"}, {"cat": "classic", "sub": "국산", "name": "국산 소형 (티코 · 프라이드 급)", "rent": 50, "single": null, "km": "2,000원", "body": "small", "tow": 40, "id": "v55"}, {"cat": "classic", "sub": "국산", "name": "국산 중형 (쏘나타 · 에스페로 · 스쿠프 급)", "rent": 60, "single": null, "km": "2,000원", "body": "classic", "tow": 40, "id": "v56"}, {"cat": "classic", "sub": "국산", "name": "국산 대형 (에쿠스 · 체어맨 급)", "rent": 70, "single": null, "km": "2,000원", "body": "classic", "tow": 40, "id": "v57"}, {"cat": "classic", "sub": "국산", "name": "국산 SUV · 승합 (그레이스 · 코란도 · 갤로퍼 · 포니 급)", "rent": 70, "single": null, "km": "2,000원", "body": "suv", "tow": 40, "id": "v58"}, {"cat": "classic", "sub": "수입", "name": "수입 중형 (벤츠 E클래스 · 독일 3사 급)", "rent": 70, "single": null, "km": "2,000원", "body": "classic", "tow": 40, "id": "v59"}, {"cat": "classic", "sub": "수입", "name": "수입 대형 (벤츠 S클래스 · 독일 3사 급)", "rent": 80, "single": null, "km": "2,000원", "body": "classic", "tow": 40, "id": "v60"}, {"cat": "classic", "sub": "수입", "name": "수입 SUV (BMW X5 등 독일 3사)", "rent": 80, "single": null, "km": "2,000원", "body": "suv", "tow": 40, "id": "v61"}, {"cat": "classic", "sub": "버스", "name": "70~90년대 시내버스", "rent": 120, "single": null, "km": "2,000원", "body": "bus", "tow": 80, "id": "v62"}, {"cat": "classic", "sub": "화물차", "name": "1톤 트럭 · 탑차", "rent": 50, "single": null, "km": "2,000원", "body": "truck", "tow": 40, "id": "v63"}, {"cat": "classic", "sub": "화물차", "name": "5톤 이상 화물차", "rent": 120, "single": null, "km": "2,000원", "body": "truck", "tow": 80, "id": "v64"}, {"cat": "classic", "sub": "특수차", "name": "올드 경찰차", "rent": 70, "single": null, "km": "2,000원", "body": "police", "tow": 40, "id": "v65"}, {"cat": "classic", "sub": "특수차", "name": "올드 구급차", "rent": 80, "single": null, "km": "2,000원", "body": "ambulance", "tow": 40, "id": "v66"}, {"cat": "super", "sub": "프리미엄 수입", "name": "람보르기니 · 맥라렌 · 페라리 · 롤스로이스 · 애스턴마틴", "rent": 400, "single": 500, "km": "4,000원", "body": "super", "towNote": "견인 시 km당 2,000원 (촬영 후 정산)", "id": "v67", "towOpt": 40}, {"cat": "super", "sub": "프리미엄 수입", "name": "람보르기니 우루스 · 벤틀리 플라잉스퍼 급", "rent": 350, "single": 450, "km": "3,500원", "body": "suv", "id": "v68"}, {"cat": "super", "sub": "프리미엄 수입", "name": "포르쉐 타이칸", "rent": 250, "single": 300, "km": "2,500원", "body": "super", "id": "v69"}, {"cat": "super", "sub": "프리미엄 수입", "name": "벤츠 S클래스(신형) · BMW 7시리즈(신형) · 벤츠 G바겐 · 포르쉐 911", "rent": 200, "single": 300, "km": "2,000원", "body": "super", "id": "v70"}, {"cat": "super", "sub": "프리미엄 수입", "name": "포르쉐 박스터 GTS · BMW Z4 M40i", "rent": 130, "single": 160, "km": "1,500원", "body": "super", "id": "v71"}, {"cat": "vip", "sub": "리무진", "name": "쏠라티(특장) · 카니발 하이리무진(특장)", "rent": 70, "single": 85, "km": "700원", "body": "van", "id": "v72"}, {"cat": "vip", "sub": "리무진", "name": "G90 리무진", "rent": 100, "single": 130, "km": "1,000원", "body": "sedan", "id": "v73"}, {"cat": "vip", "sub": "리무진 밴", "name": "벤츠 스프린터(숏바디) · 쉐보레 밴 · 서버밴", "rent": 90, "single": 120, "km": "900원", "body": "van", "id": "v74"}, {"cat": "vip", "sub": "리무진 밴", "name": "벤츠 스프린터 (롱바디 하이탑 럭셔리 리무진)", "rent": 130, "single": 170, "km": "1,300원", "body": "van", "id": "v75"}, {"cat": "vip", "sub": "수입 대형", "name": "벤츠 S클래스(구형) · BMW 7시리즈(구형) · 레인지로버(구형) · 캐딜락 에스컬레이드", "rent": 120, "single": 150, "km": "1,200원", "body": "suv", "id": "v76"}, {"cat": "vip", "sub": "수입 대형", "name": "레인지로버 보그(신형) · 포르쉐 카이엔 · BMW M · 쉐보레 타호", "rent": 150, "single": 200, "km": "1,500원", "body": "suv", "id": "v77"}, {"cat": "vip", "sub": "수입 대형", "name": "벤츠 GLS600 마이바흐 · 벤틀리 급", "rent": 300, "single": 400, "km": "3,000원", "body": "suv", "id": "v78"}];
+
+const TERMS = [
+  "모든 금액은 VAT 별도입니다.",
+  "시간은 차고지 출발부터 촬영 종료 후 차고지 도착까지 계산합니다. (차고지: 경기 고양시 일산동구 성석동)",
+  "기본 6시간 기준이며, 초과 시간(시간당 기본 사용료의 10%)은 촬영 후 따로 정산됩니다.",
+  "야간 할증 50%: 06시 이전 또는 24시 이후 출발, 24시 이후 도착 시",
+  "취소: 차고지 출발 전 50%, 출발 후 100% 청구 (오전 9시 이전 콜타임은 취소 시 100%)",
+  "번호판이 없거나 장거리 운행이 어려운 올드카·슈퍼카의 지방 촬영은 차량당 카캐리어 비용이 추가됩니다.",
+  "주차비·통행료는 실비 정산합니다.",
+  "썬팅 탈부착 등으로 차량을 쉬게 되면 1일당 대여료의 50%가 휴차료로 붙을 수 있습니다.",
+  "견인차를 쓰는 경우 이동 거리는 km당 2,000원으로 계산합니다.",
+  "목록에 없는 차량도 섭외할 수 있습니다."
+];
+const COLORS = [["화이트","#f4f4f2"],["블랙","#1a1a1a"],["실버","#b9bcc0"],["그레이","#6d7177"],["레드","#b81d24"],["버건디","#6b1f2a"],["블루","#1f4fb5"],["네이비","#1d2a48"],["그린","#2e5e45"],["옐로우","#e8c21d"],["오렌지","#e2681f"],["베이지","#cdbb98"]];
+const MAKE_CATS = ["차량 섭외","팝업·전시용 제작","올드카 복원","특수 소품 제작","랩핑·도색"];
+const WORKS = ["썬팅 제거","좌석 탈거","택시 갓등·미터기","내부 드레싱","랩핑"];
+const PAY_METHODS = ["신용·체크카드","카카오페이","토스페이","네이버페이","계좌이체"];
+
+/* 차량별 추가 작업 금액 (만원) */
+const isImport = c => c.cat==="super" || /수입|벤츠|BMW|아우디|포르쉐|레인지|캐딜락|테슬라|미니|머스탱|쉐보레|벤틀리|마이바흐|타호/.test(c.sub+c.name);
+function optionsFor(c){ const o=[];
+  if(c.sub!=="촬영 장비차량" && c.body!=="bike"){
+    o.push({g:"mod",k:"tint",l:"썬팅 제거",p:/리무진 밴/.test(c.sub)?100:(isImport(c)?70:40)});
+    o.push({g:"mod",k:"seat",l:"좌석 탈거",p:c.body==="bus"?100:30});
+    o.push({g:"mod",k:"finish",l:"실내 벽·바닥·천장 마감",p:50}); }
+  o.push({g:"wrap",k:"wlogo",l:"로고 추가",p:10}); o.push({g:"wrap",k:"wfull",l:"전체 랩핑",p:150});
+  if(c.towOpt) o.push({g:"extra",k:"tow",l:"견인",p:c.towOpt});
+  if(c.body==="taxi"){ o.push({g:"extra",k:"lamp",l:"택시 갓등 작업",p:10}); o.push({g:"extra",k:"meter",l:"미터기 작업",p:10}); }
+  if(c.body==="bus") o.push({g:"extra",k:"dress",l:"내·외부 드레싱",p:80});
+  if(c.sub==="촬영 장비차량"){ o.push({g:"extra",k:"arm",l:"블랙암",p:40}); if(/슈팅카/.test(c.name)){ o.push({g:"extra",k:"btow",l:"바이크토우 (보조인력 필요)",p:45}); o.push({g:"extra",k:"horse",l:"승마기 (보조인력 필요)",p:40}); } o.push({g:"extra",k:"helper",l:"보조인력 1인",p:20}); }
+  return o; }
+const SERVICES = [{k:"driver",l:"운전자 필요",s:"촬영 장면에서 차량을 운전할 기사 배치",p:20},{k:"care",l:"현장 케어 서비스",s:"현장 대기 및 차량 케어",p:20},{k:"install",l:"운송 및 전시 설치 지원",s:"촬영장·전시장 운송과 설치",p:40}];
+const optPrice = p => p==null?"상담 후 안내":p===0?"포함":"+"+man(p);
+const baseHours = c => parseInt(c.hours||"6",10)||6;
+/* 예약 1건 금액 계산 (원) */
+function quote(items,f){
+  const lines=[]; let blocked=[];
+  items.forEach(({it,c})=>{
+    const hours=Math.max(0,Number(it.hours)||0), nights=Math.max(0,Number(it.nights)||0), meals=Math.max(0,Number(it.meals)||0);
+    const base = it.mode==="single" && typeof c.single==="number" ? c.single : c.rent;
+    if(typeof base!=="number"){ blocked.push(c.name); return; }
+    const sd=shootDays(it), wd=waitDays(it);
+    const L=[[`${c.name} · ${it.mode==="single"?"일회성 대여":"기본 대여"}${sd>1?` × ${sd}일`:""}`,base*sd]];
+    if(wd) L.push([`대기 ${wd}일 (휴차료 50%)`,base*0.5*wd]);
+    if(c.labor) L.push(["기본 인건비"+(sd>1?` × ${sd}일`:""),c.labor*sd]);
+    if(c.tow && c.cat==="classic") L.push(["견인료",c.tow]);
+    optionsFor(c).filter(o=>it.opts?.includes(o.k)&&typeof o.p==="number"&&o.p>0).forEach(o=>L.push([o.l,o.p])); SERVICES.filter(s=>it.svc?.includes(s.k)&&s.p>0).forEach(s=>L.push([s.l,s.p]));
+    const nd=(it.days||[]).filter(d=>d.night).length; if(nd) L.push([`야간 할증 50% × ${nd}일`,base*0.5*nd]);
+    lines.push({car:c, lines:L, sum:L.reduce((s,x)=>s+x[1],0)});
+  });
+  const supply=Math.round(lines.reduce((s,x)=>s+x.sum,0)*10000), vat=Math.round(supply*0.1);
+  return {lines, supply, vat, total:supply+vat, blocked};
+}
+const won = n => n.toLocaleString("ko-KR")+"원";
+const shootDays = it => Math.max(1,(it.days||[]).filter(d=>d.type!=="wait").length);
+const waitDays = it => (it.days||[]).filter(d=>d.type==="wait").length;
+function itemSummary(c,it){ const a=[...(it.days||[]).filter(d=>d.date).map(d=>`${d.date.slice(5).replace("-","/")} ${(d.place||"촬영")+(d.time?" "+d.time:"")+(d.night?" 야간":"")}`)];
+  optionsFor(c).filter(o=>it.opts?.includes(o.k)).forEach(o=>a.push(o.l)); SERVICES.filter(s=>it.svc?.includes(s.k)).forEach(s=>a.push(s.l)); if(it.memo) a.push("메모: "+it.memo); return [...a,...(it.options||[])].join(" · "); }
+function newDl(c){ return {days:[{date:"",type:"shoot",place:"",time:""}],logo:null,text:"",opts:[],svc:[],memo:"",mode:"rent",night:false,hours:baseHours(c),nights:0,meals:0}; }
+function dlEstimate(c){ const q=quote([{it:ui.dl,c}],{}); return q.blocked.length?"금액 협의":won(q.total); }
+
+function load(){ try{ const s=JSON.parse(localStorage.getItem(KEY)); if(s&&s.cars) return s; }catch(e){} return null; }
+const fresh = () => ({cars:structuredClone(PRICE_DATA),quotes:[],cart:[],designs:[],favs:[],consults:[]});
+const db = load() || fresh();
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(db)); return true; }catch(e){ toast("저장 공간이 부족해요. 사진 크기를 줄여주세요."); return false; } }
+const ui = { tab:"home", stack:[], dl:{days:[{date:"",type:"shoot",place:"",time:""}],logo:null,text:"",opts:[],svc:[],memo:"",mode:"rent",night:false,hours:6,nights:0,meals:0}, cat:"prop", sub:"전체", sort:"default", q:"", admin:false, color:null, design:null, dtab:"wrap", inq:"make", pm:"신용·체크카드", pending:null, form:{hours:6,nights:0,meals:0}, mform:{cats:["차량 섭외"]} };
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+const man = n => n==null ? "협의" : (typeof n==="string" ? n+"만원" : n.toLocaleString("ko-KR")+"만원");
+const car = id => db.cars.find(c=>c.id===id);
+let tt; function toast(m){ const t=$("#toast"); t.textContent=m; t.hidden=false; clearTimeout(tt); tt=setTimeout(()=>t.hidden=true,1900); }
+const ic = p => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${p}</svg>`;
+const IC = {
+  home:'<path d="M4 10.5 12 4l8 6.5V20h-5v-5h-6v5H4z"/>',
+  grid:'<path d="M4 6h16M4 12h16M4 18h16"/>',
+  chat:'<path d="M4 5h16v11H9l-5 4z"/>',
+  user:'<circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c.8-3.6 3.8-5.5 7.5-5.5s6.7 1.9 7.5 5.5"/>',
+  back:'<path d="M15 5l-7 7 7 7"/>', right:'<path d="M9 5l7 7-7 7"/>', search:'<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/>',
+  heart:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>',
+  close:'<path d="M6 6l12 12M18 6 6 18"/>', plus:'<path d="M12 5v14M5 12h14"/>', upload:'<path d="M12 16V5M7.5 9.5 12 5l4.5 4.5M5 19h14"/>',
+  prop:'<path d="M3 15.5V12l2.2-4.2c.3-.5.8-.8 1.4-.8h10.8c.6 0 1.1.3 1.4.8L21 12v3.5"/><path d="M3 15.5h18M9 4.5h6v2.5H9z"/><circle cx="7" cy="16.5" r="1.8"/><circle cx="17" cy="16.5" r="1.8"/>',
+  classic:'<path d="M2.5 15.5c0-2 1-3 3-3.3L8 8.5c.4-.6 1-1 1.8-1h4.4c.8 0 1.4.4 1.8 1l2.5 3.7c2 .3 3 1.3 3 3.3"/><path d="M2.5 15.5h19"/><circle cx="7" cy="16.5" r="2"/><circle cx="17" cy="16.5" r="2"/>',
+  super:'<path d="M2 15.5c0-1.4.8-2.3 2.4-2.6l4.4-3.4c.6-.4 1.3-.7 2-.7h3.6c1 0 1.9.4 2.6 1l2.3 2.4c2 .3 2.7 1.3 2.7 3.3"/><path d="M2 15.5h20"/><circle cx="6.5" cy="16.5" r="1.8"/><circle cx="17.5" cy="16.5" r="1.8"/>',
+  vip:'<path d="M2.5 15.5v-2.8c0-.6.4-1.1 1-1.2l3-.5 2.3-3.2c.4-.5 1-.8 1.6-.8h3.6c.7 0 1.3.3 1.6.9l1.9 3.1 3 .5c.6.1 1 .6 1 1.2v2.8"/><path d="M2.5 15.5h19"/><circle cx="7" cy="16.5" r="1.8"/><circle cx="17" cy="16.5" r="1.8"/>',
+  make:'<path d="M14.5 5.5a3.5 3.5 0 0 0 4.4 4.4L11 17.8 8 18l.2-3 7.9-7.9"/><path d="M4 20h16"/>',
+  kakao:'<path d="M12 4C7 4 3 7.1 3 11c0 2.5 1.7 4.7 4.2 6l-1 3.6c-.1.3.3.6.6.4l4.2-2.8c.3 0 .7.1 1 .1 5 0 9-3.1 9-7s-4-7.3-9-7.3z"/>'
+};
+
+/* 사진 대신 쓰는 실루엣 (실제 누끼 사진이 들어오면 자동으로 사진이 우선) */
+const SHAPES = {
+  super:["M30 140 C50 124 86 108 136 99 L194 76 C214 69 264 67 296 76 L352 99 C388 103 410 112 420 128 L422 146 L30 146 Z","M150 99 L200 80 C222 74 260 74 284 80 L324 99 Z"],
+  sedan:["M26 142 L30 118 C46 108 80 104 104 102 L146 70 C160 63 244 61 266 68 L320 102 C362 104 400 111 418 122 L422 144 Z","M120 102 L156 74 C168 69 240 67 258 72 L302 102 Z"],
+  small:["M60 142 L62 112 C70 104 92 100 110 98 L150 66 C160 60 250 58 268 66 L312 98 C344 102 372 110 384 122 L388 144 Z","M128 98 L158 70 C168 66 248 64 262 70 L298 98 Z"],
+  classic:["M24 142 L26 112 C42 104 76 101 102 99 L134 68 C146 61 252 59 266 66 L302 99 C354 101 394 106 416 114 L420 142 Z","M116 99 L142 72 C152 67 248 65 260 70 L288 99 Z"],
+  suv:["M26 144 L28 104 C42 95 74 93 96 91 L128 58 C138 51 284 49 300 56 L336 91 C376 93 408 99 418 112 L420 144 Z","M108 91 L136 62 C146 57 278 55 292 60 L324 91 Z"],
+  van:["M30 144 L30 72 C30 55 44 46 62 46 L306 46 C328 46 342 58 354 72 L398 108 C412 112 420 120 420 130 L420 144 Z","M300 54 C320 54 332 64 344 78 L370 102 L300 102 Z"],
+  truck:["M30 144 L30 40 L280 40 L280 144 Z M286 144 L286 74 L350 74 C366 74 376 82 384 94 L414 122 L418 144 Z","M300 82 L346 82 C356 82 364 88 370 96 L388 114 L300 114 Z"],
+  bus:["M18 146 L18 50 C18 40 26 34 36 34 L414 34 C426 34 432 42 432 54 L432 146 Z","M40 50 L420 50 L420 92 L40 92 Z"],
+  bike:["M110 120 L180 82 L250 82 L290 104 L330 104 L350 120 L300 122 L240 108 L190 120 Z","M232 70 L266 70 L272 82 L236 82 Z"]
+};
+function isLight(h){ const n=parseInt(h.slice(1),16); return ((n>>16)*299+((n>>8)&255)*587+(n&255)*114)/1000>170; }
+function silhouette(c,o={}){
+  const body=c.body||"sedan", hex=o.color||c.hex||"#b9bcc0";
+  const key={taxi:"sedan",police:"sedan",ambulance:"van"}[body]||body; const [s,g]=SHAPES[key]||SHAPES.sedan;
+  let ex="";
+  if(body==="police") ex='<rect x="190" y="56" width="28" height="8" rx="2" fill="#d33"/><rect x="218" y="56" width="28" height="8" rx="2" fill="#2a6bff"/><rect x="34" y="118" width="384" height="8" fill="#fff" opacity=".9"/>';
+  if(body==="ambulance") ex='<rect x="30" y="98" width="320" height="10" fill="#d8352a"/>';
+  if(body==="taxi") ex='<rect x="198" y="54" width="40" height="11" rx="2" fill="#fff" stroke="#666"/>';
+  if(body==="bus") ex='<path d="M40 50 L420 50 L420 92 L40 92 Z" fill="#2b3038" opacity=".85"/><rect x="40" y="70" width="380" height="2" fill="'+hex+'"/>';
+  const wheels = body==="bike" ? '<circle cx="140" cy="128" r="22" fill="none" stroke="#1a1a1a" stroke-width="8"/><circle cx="330" cy="128" r="22" fill="none" stroke="#1a1a1a" stroke-width="8"/>'
+    : body==="bus" ? '<circle cx="96" cy="146" r="20" fill="#1a1a1a"/><circle cx="360" cy="146" r="20" fill="#1a1a1a"/>'
+    : '<circle cx="104" cy="144" r="21" fill="#1a1a1a"/><circle cx="104" cy="144" r="9" fill="#9a9a9a"/><circle cx="346" cy="144" r="21" fill="#1a1a1a"/><circle cx="346" cy="144" r="9" fill="#9a9a9a"/>';
+  const logo=o.logo?`<image href="${o.logo}" x="170" y="100" width="110" height="30" preserveAspectRatio="xMidYMid meet"/>`:"";
+  const text=o.text?`<text x="225" y="${body==="bus"?122:134}" text-anchor="middle" font-size="14" font-weight="700" font-family="-apple-system,sans-serif" fill="${isLight(hex)?"#111":"#fff"}">${esc(o.text.slice(0,24))}</text>`:"";
+  return `<svg viewBox="0 0 450 172" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="${s}" fill="${hex}" stroke="rgba(0,0,0,.18)" fill-rule="evenodd"/>${body==="bus"?"":`<path d="${g}" fill="#2b3038" opacity=".85"/>`}${ex}${logo}${text}${wheels}</svg>`;
+}
+/* 사진(누끼 PNG) 있으면 사진 + 색상 덧입히기, 없으면 실루엣 */
+function studio(c,o={},extra=""){
+  const p=c.photos?.[o.i||0];
+  let inner;
+  if(p){ inner=`<img src="${p}" alt="${esc(c.name)}">`+(o.color?`<span class="tint" style="background:${o.color};-webkit-mask-image:url('${p}');mask-image:url('${p}')"></span>`:"")+(o.text?`<span style="position:absolute;inset:auto 0 30%;text-align:center;font-weight:700;z-index:3;color:${isLight(o.color||"#fff")?"#111":"#fff"}">${esc(o.text)}</span>`:""); }
+  else inner=silhouette(c,o);
+  return `<span class="car">${inner}</span>${p?"":'<span class="wait">사진 준비 중</span>'}${extra}`;
+}
+
+const TABS=[["home","홈",IC.home],["category","카테고리",IC.grid],["inquiry","문의",IC.chat],["me","내정보",IC.user]];
+function go(tab){ ui.tab=tab; ui.stack=[]; render(); scrollTo(0,0); }
+function push(v){ ui.stack.push(v); render(); scrollTo(0,0); }
+function back(){ ui.stack.pop(); render(); scrollTo(0,0); }
+const hdr = (title,o={}) => `<header class="hd pad ${o.line?"line":""}">${ui.stack.length?`<button class="ib" data-act="back" aria-label="뒤로">${ic(IC.back)}</button>`:""}<h1>${title}</h1></header>`;
+function openCat(id){ const c=CATS.find(x=>x.id===id); if(c?.inquiry){ ui.inq="make"; return go("inquiry"); } ui.cat=id; ui.sub="전체"; ui.q=""; go("category"); }
+const kakaoBanner = () => `<a class="kakao" href="${KAKAO_URL}" target="_blank" rel="noopener"><span class="bub"><svg viewBox="0 0 24 24">${IC.kakao}</svg></span><span><b>답답할 땐? 24시 실시간 카카오톡 상담!</b><span>지금 바로 연결됩니다</span></span></a>`;
+
+function rerenderKeep(){ const y=scrollY; render(); scrollTo(0,y); }
+function render(){
+  const v=ui.stack.at(-1);
+  $("#app").innerHTML = v?.type==="detail"?vDetail(v.id) : v?.type==="design"?vDesign() : v?.type==="admin"?vAdmin() : v?.type==="favs"?vFavs() : v?.type==="terms"?vTerms() : v?.type==="pay"?vPay() : v?.type==="book"?hdr("예약·결제",{line:true})+vQuoteForm() : v?.type==="done"?vDone() : {home:vHome,category:vCategory,inquiry:vInquiry,me:vMe}[ui.tab]();
+  $("#tabbar").innerHTML = TABS.map(([k,l,p])=>`<button data-tab="${k}" ${ui.tab===k?'aria-current="page"':""}>${ic(p)}<span>${l}</span></button>`).join("");
+  bind();
+}
+const priceTag = c => `${man(c.rent)}${c.rent!=null?"<small>/ "+(c.hours||"6시간")+"</small>":""}`;
+const lrow = c => `<button class="lrow" data-open="${c.id}"><span class="ph">${studio(c)}</span><span class="tx"><span class="lab">${esc(c.sub)}</span><span class="nm">${esc(c.name)}</span><span class="pr num" style="display:block">${priceTag(c)}</span></span></button>`;
+
+function vHome(){
+  const pick = ["prop","classic","super","vip"].map(id=>({id, list:db.cars.filter(c=>c.cat===id)}));
+  return `<header class="hd pad"><div class="logo"><img src="${LOGO}" alt="DIVINE"></div><button class="more" data-act="cart" style="color:var(--fg)">예약함${db.cart.length?` <b class=\"num\">${db.cart.length}</b>`:""}</button></header>
+  <div class="pad">
+    <label class="search">${ic(IC.search)}<input id="homeq" type="search" placeholder="차종으로 찾기 (예: 그랜저, 포니, 롤스로이스)" aria-label="차량 검색"></label>
+    <div class="catrow" style="padding-top:22px">${CATS.map(c=>`<button data-cat="${c.id}"><span class="ic">${ic(IC[c.id])}</span>${c.home}</button>`).join("")}</div>
+    <div style="padding-top:22px">${kakaoBanner()}</div>
+  </div>
+  <div class="gap"></div>
+  ${pick.map(({id,list},n)=>!list.length?"":`<div class="pad ${n?"sec":""}"><div class="row"><h2 class="h3">${esc(catLabel(id))}</h2><button class="more" data-cat="${id}">전체 ${list.length}${ic(IC.right)}</button></div>
+    <div class="hs">${list.slice(0,8).map(c=>`<button class="hcard" data-open="${c.id}"><span class="ph">${studio(c)}</span><span class="lab" style="display:block;margin-top:8px">${esc(c.sub)}</span><span class="nm" style="font-size:14px">${esc(c.name)}</span><span class="pr num" style="display:block;font-size:15px">${priceTag(c)}</span></button>`).join("")}</div></div>`).join("")}
+  <div class="pad sec"><button class="lrow" data-cat="make" style="border-top:1px solid var(--line)"><span class="tx"><span class="nm">찾는 차량이 없으면 제작·섭외 문의</span><span class="lab">목록에 없는 차량 섭외, 촬영용 차량 제작, 올드카 복원</span></span>${ic(IC.right)}</button>
+  <p class="note">모든 금액은 VAT 별도, 기본 6시간 기준입니다. <button class="small" style="text-decoration:underline;color:var(--sub)" data-act="terms">이용 기준 보기</button></p></div>
+  <div style="height:24px"></div>`;
+}
+
+function catList(){ const q=ui.q.trim().toLowerCase().replace(/\s/g,"");
+  let r=q ? db.cars.filter(c=>(c.name+c.sub+catLabel(c.cat)).toLowerCase().replace(/\s/g,"").includes(q)) : db.cars.filter(c=>c.cat===ui.cat&&(ui.sub==="전체"||c.sub===ui.sub));
+  if(ui.sort==="low") r=[...r].sort((a,b)=>(a.rent??9e9)-(b.rent??9e9));
+  if(ui.sort==="high") r=[...r].sort((a,b)=>(b.rent??-1)-(a.rent??-1));
+  return r; }
+function vCategory(){ const r=catList(); const subs=["전체",...new Set(db.cars.filter(c=>c.cat===ui.cat).map(c=>c.sub))];
+  return `<header class="hd pad"><h1>카테고리</h1><button class="more" data-act="cart" style="color:var(--fg)">예약함${db.cart.length?` <b class=\"num\">${db.cart.length}</b>`:""}</button></header>
+  <div class="pad">
+    <label class="search">${ic(IC.search)}<input id="q" type="search" value="${esc(ui.q)}" placeholder="전체 차량에서 찾기" aria-label="차량 검색"></label>
+    <div class="utabs" role="tablist" style="margin-top:6px">${CATS.map(c=>`<button role="tab" data-cat="${c.id}" aria-selected="${!ui.q&&ui.cat===c.id}">${esc(c.label)}</button>`).join("")}</div>
+    ${!ui.q&&subs.length>2?`<div class="subs">${subs.map(s=>`<button data-sub="${esc(s)}" aria-pressed="${ui.sub===s}">${esc(s)}</button>`).join("")}</div>`:""}
+    <div class="row" style="padding-top:12px;font-size:13px"><span class="sub">${ui.q?`“${esc(ui.q)}” 검색 결과 `:""}${r.length}건</span>
+      <select id="sort" aria-label="정렬" style="border:0;background:none;font-size:13px;color:var(--sub)"><option value="default" ${ui.sort==="default"?"selected":""}>기본순</option><option value="low" ${ui.sort==="low"?"selected":""}>낮은 가격순</option><option value="high" ${ui.sort==="high"?"selected":""}>높은 가격순</option></select></div>
+    <div id="list">${r.length?r.map(lrow).join(""):`<p class="empty">해당하는 차량이 없어요.<br><button style="text-decoration:underline;margin-top:6px" data-cat="make">차량제작문의 하기</button></p>`}</div>
+  </div><div style="height:24px"></div>`;
+}
+
+function vDetail(id){ const c=car(id); if(!c) return hdr("차량");
+  const f=db.favs.includes(c.id), inCart=db.cart.some(x=>x.car===c.id), col=ui.color;
+  const rows=[["기본 대여료",man(c.rent)+(c.rent!=null?" / "+(c.hours||"6시간"):"")]];
+  if(c.single!==undefined && c.single!==null) rows.push(["일회성 대여",man(c.single)]);
+  if(c.labor) rows.push(["기본 인건비",man(c.labor)]);
+  if(c.addHour) rows.push(["추가 요금",c.addHour]);
+  if(c.km) rows.push(["초과 km당",c.km]);
+  if(c.tow) rows.push(["견인료",man(c.tow)]);
+  if(c.towNote) rows.push(["견인",c.towNote]);
+  return `${hdr("")}
+  <div class="ph gal" id="gal">${studio(c,{color:col,logo:ui.dl.logo,text:ui.dl.text})}</div>
+  <div class="pad">
+    <div class="row" style="padding-top:10px"><span class="small sub">색상 바꿔보기${col?` · ${esc((COLORS.find(x=>x[1]===col)||["직접 선택"])[0])}`:""}</span>${col?`<button class="small sub" data-color="" style="text-decoration:underline">원래 색</button>`:""}</div>
+    <div class="swatch">${COLORS.map(([n,h])=>`<button data-color="${h}" style="background:${h}" aria-label="${n}" aria-pressed="${col===h}"></button>`).join("")}<label aria-label="다른 색 고르기">${ic(IC.plus)}<input type="color" id="pick" value="${col||"#888888"}"></label></div>
+  </div>
+  <div class="pad dt" style="padding-top:18px">
+    <p class="small sub" style="margin:0">${esc(catLabel(c.cat))} · ${esc(c.sub)}</p>
+    <h2>${esc(c.name)}</h2>
+    <div class="price-l num"><b>${man(c.rent)}</b>${c.rent!=null?`<span class="sub small">/ ${esc(c.hours||"6시간")} · VAT 별도</span>`:""}</div>
+    ${c.note?`<p class="small sub" style="margin:4px 0 0">${esc(c.note)}</p>`:""}
+  </div>
+  <div class="gap"></div>
+  <div class="pad">
+    <div id="dlsched"><div class="row"><h3 class="h3">촬영 일정</h3><span class="small sub">${shootDays(ui.dl)}일</span></div>
+      <p class="note" style="margin-top:4px">차량이 필요한 날짜만 추가하세요. 날짜마다 장소와 시간을 따로 적을 수 있어요.</p>
+      ${ui.dl.days.map((d,i)=>`<div style="padding:12px 0;border-bottom:1px solid var(--line)">
+        <div class="row"><b style="font-size:14px">${i+1}일차</b>${ui.dl.days.length>1?`<button class="small sub" data-rmday="${i}" style="text-decoration:underline">삭제</button>`:""}</div>
+        <div class="fl" style="gap:8px;margin-top:8px"><input class="in" type="date" data-day="${i}" data-f="date" value="${esc(d.date)}" aria-label="${i+1}일차 날짜">
+        <input class="in" data-day="${i}" data-f="place" value="${esc(d.place)}" placeholder="촬영 장소" aria-label="${i+1}일차 촬영 장소">
+        <input class="in" data-day="${i}" data-f="time" value="${esc(d.time)}" placeholder="시간 (예: 07:00 ~ 19:00)" aria-label="${i+1}일차 시간"></div>
+        <label class="tg" style="padding-top:8px"><span>야간 촬영<small>06시 이전·24시 이후 출발, 24시 이후 도착 시 그날 대여료 50% 할증</small></span><span class="sw"><input type="checkbox" data-dnight="${i}" ${d.night?"checked":""}><i></i></span></label>
+      </div>`).join("")}
+      <button class="btn out sm" data-act="addday" style="margin-top:12px;width:100%">${ic(IC.plus)} 날짜 추가</button></div>
+    <div class="sec">
+    <h3 class="h3">요금</h3>
+    <table class="tbl"><tbody>${rows.map(([k,v])=>`<tr><th>${k}</th><td>${esc(v)}</td></tr>`).join("")}</tbody></table>
+    <p class="note">같은 등급의 다른 차종도 같은 금액입니다.</p></div>
+    ${optionsFor(c).some(o=>o.g==="mod")?`<div class="sec"><h3 class="h3">개조 옵션</h3><div style="margin-top:4px">${optionsFor(c).filter(o=>o.g==="mod").map(o=>`<label class="chk"><input type="checkbox" data-dopt="${o.k}" ${ui.dl.opts.includes(o.k)?"checked":""}><span>${esc(o.l)}${o.s?`<small style="display:block" class="muted">${esc(o.s)}</small>`:""}</span><small class="num">${optPrice(o.p)}</small></label>`).join("")}</div></div>`:""}
+    ${optionsFor(c).some(o=>o.g==="extra")?`<div class="sec"><h3 class="h3">차량별 추가 작업</h3><div style="margin-top:4px">${optionsFor(c).filter(o=>o.g==="extra").map(o=>`<label class="chk"><input type="checkbox" data-dopt="${o.k}" ${ui.dl.opts.includes(o.k)?"checked":""}><span>${esc(o.l)}${o.s?`<small style="display:block" class="muted">${esc(o.s)}</small>`:""}</span><small class="num">${optPrice(o.p)}</small></label>`).join("")}</div>${c.towNote?`<p class="note">${esc(c.towNote)}</p>`:""}</div>`:""}
+    <div class="sec"><h3 class="h3">추가 서비스</h3><div style="margin-top:4px">${SERVICES.map(o=>`<label class="chk"><input type="checkbox" data-dsvc="${o.k}" ${ui.dl.svc.includes(o.k)?"checked":""}><span>${esc(o.l)}${o.s?`<small style="display:block" class="muted">${esc(o.s)}</small>`:""}</span><small class="num">${optPrice(o.p)}</small></label>`).join("")}</div>
+      <p class="note">썬팅 탈부착으로 차량을 쉬게 되면 1일당 대여료의 50%가 휴차료로 붙을 수 있습니다.</p></div>
+    <div class="sec"><h3 class="h3">기타 요청사항</h3><textarea class="in" id="dl-memo" style="margin-top:12px" placeholder="장면 설명, 필요한 소품, 특이사항을 적어주세요">${esc(ui.dl.memo)}</textarea></div>
+    ${typeof c.single==="number"?`<div class="sec" id="dlcond"><h3 class="h3">요금 기준</h3><div class="fl" style="margin-top:12px">
+      <div><div class="opts"><button type="button" data-dmode="rent" aria-pressed="${ui.dl.mode!=="single"}">기본 대여 ${man(c.rent)}</button><button type="button" data-dmode="single" aria-pressed="${ui.dl.mode==="single"}">일회성 대여 ${man(c.single)}</button></div></div></div></div>`:""}
+    <div class="sec"><h3 class="h3">랩핑 작업</h3>
+      <label class="up">${ui.dl.logo?`<img src="${ui.dl.logo}" alt="올린 이미지">`:`${ic(IC.upload)} 로고·디자인 이미지 올리기`}<input type="file" id="dlogo" accept="image/*"></label>
+      ${ui.dl.logo?`<button class="small sub" data-act="rmdlogo" style="margin-top:8px;text-decoration:underline">이미지 빼기</button>`:""}
+      <div style="margin-top:14px"><label class="lbl" for="dtext2">차량에 넣을 문구</label><input class="in" id="dtext2" maxlength="24" value="${esc(ui.dl.text)}" placeholder="작품명, 회사명"></div>
+      <div style="margin-top:6px">${optionsFor(c).filter(o=>o.g==="wrap").map(o=>`<label class="chk"><input type="checkbox" data-dopt="${o.k}" ${ui.dl.opts.includes(o.k)?"checked":""}><span>${esc(o.l)}</span><small class="num">${optPrice(o.p)}</small></label>`).join("")}</div></div>
+    <div class="sec"><div class="row"><h3 class="h3">이용 기준</h3><button class="more" data-act="terms">전체 보기${ic(IC.right)}</button></div>
+      <ul class="terms">${TERMS.slice(1,5).map(t=>`<li>${esc(t)}</li>`).join("")}</ul></div>
+    <div class="sec">${kakaoBanner()}</div>
+    ${ui.admin?`<div class="sec"><button class="btn out" data-edit="${c.id}">관리자: 이 차량 수정</button></div>`:""}
+    <div class="sumbar"><div class="row"><span class="sub">예상 결제 금액 (VAT 포함)</span><b class="num" id="dlest" style="font-size:18px">${dlEstimate(c)}</b></div>
+    <div class="fl" style="flex-direction:row;gap:8px"><button class="favb" data-fav="${c.id}" aria-pressed="${f}" aria-label="찜하기">${ic(IC.heart)}</button><button class="btn out" style="flex:1" data-addcart="${c.id}">${inCart?"담김":"담기"}</button><button class="btn pri" style="flex:2" data-book="${c.id}">${c.rent==null?"금액 문의하기":"예약하기"}</button></div></div>
+  </div>`;
+}
+function vTerms(){ return `${hdr("이용 기준",{line:true})}<div class="pad"><ul class="terms" style="padding-top:12px;font-size:14px">${TERMS.map(t=>`<li>${esc(t)}</li>`).join("")}</ul></div>`; }
+
+function vDesign(){ const d=ui.design, c=car(d.car), t=ui.dtab;
+  return `${hdr("랩핑·문구 미리보기",{line:true})}
+  <div class="ph cv" id="pv">${studio(c,{color:d.color,logo:d.logo,text:d.text})}</div>
+  <div class="pad">
+    <div class="swatch">${COLORS.map(([n,h])=>`<button data-dcolor="${h}" style="background:${h}" aria-label="${n}" aria-pressed="${d.color===h}"></button>`).join("")}</div>
+    <div class="seg" role="tablist">${[["wrap","랩핑·문구"],["mod","작업 요청"]].map(([k,l])=>`<button role="tab" data-dtab="${k}" aria-selected="${t===k}">${l}</button>`).join("")}</div>
+    ${t==="wrap"?`<div style="padding-top:20px"><span class="h3" style="font-size:15px">로고·디자인 이미지</span><label class="up">${d.logo?`<img src="${d.logo}" alt="올린 이미지">`:`${ic(IC.upload)} 이미지 올리기`}<input type="file" id="logo" accept="image/*"></label>
+      ${d.logo?`<button class="small sub" data-act="rmlogo" style="margin-top:8px;text-decoration:underline">이미지 빼기</button>`:""}
+      <div style="margin-top:18px"><label class="lbl" for="dtext">차량에 넣을 문구</label><input class="in" id="dtext" maxlength="24" value="${esc(d.text)}" placeholder="예) 작품명, 회사명"></div></div>`
+    :`<div style="padding-top:10px">${WORKS.map(w=>`<label class="chk"><input type="checkbox" data-opt="${esc(w)}" ${d.opts.includes(w)?"checked":""}><span>${esc(w)}</span><small class="muted">상담 후 금액 안내</small></label>`).join("")}</div>`}
+    <div class="bot" style="flex-wrap:wrap"><button class="btn out sm" style="flex:1" data-act="savedesign">시안 저장</button><button class="btn pri" style="flex:2;width:auto" data-act="designquote">이 시안으로 견적 요청</button></div>
+  </div>`;
+}
+function designSummary(d){ const a=[]; const n=d.color&&(COLORS.find(x=>x[1]===d.color)||["직접 고른 색"])[0];
+  if(n) a.push(`${n} 색상`); if(d.logo) a.push("로고 랩핑"); if(d.text) a.push(`문구 “${d.text}”`); return [...a,...(d.opts||[])]; }
+
+function vInquiry(){
+  return `${hdr("문의")}
+  <div class="pad">${kakaoBanner()}<div class="utabs" role="tablist" style="margin-top:14px">${[["make","차량제작문의"],["call","전화"]].map(([k,l])=>`<button role="tab" data-inq="${k}" aria-selected="${ui.inq===k}">${l}</button>`).join("")}</div></div>
+  ${ui.inq==="call"?vCall():vMakeForm()}`;
+}
+function cartItems(){ return bookList().map((it,i)=>({it,c:car(it.car),i})).filter(x=>x.c); }
+function vQuoteForm(){ const f=ui.form, items=cartItems(), q=quote(items,f);
+  return `<form class="pad" id="qform" novalidate>
+    <div style="padding-top:18px"><div class="row"><h3 class="h3">예약 차량 ${items.length}</h3>${ui.direct?"":`<button type="button" class="more" data-act="addmore">차량 추가${ic(IC.right)}</button>`}</div>
+      ${items.length?items.map(({it,c,i})=>`<div class="ci" style="align-items:flex-start;flex-wrap:wrap"><span class="ph">${studio(c,it.design||{})}</span>
+        <div class="tx">${esc(c.name)}<p>${esc(c.sub)}${it.options?.length?" · "+esc(it.options.join(", ")):""}</p>
+          <b class="num">${it.mode==="single"?"일회성 "+man(c.single):man(c.rent)}</b><p>${esc(itemSummary(c,it))}</p></div>
+        <button type="button" class="x" data-rmcart="${i}" aria-label="빼기">${ic(IC.close)}</button>
+
+      </div>`).join("")
+      :`<p class="sub" style="padding:18px 0;border-bottom:1px solid var(--line);margin:0">담은 차량이 없어요. 차량 화면에서 “예약하기”를 눌러주세요.</p>`}</div>
+    <div class="sec"><h3 class="h3">예약자</h3><div class="fl" style="margin-top:14px">
+      <div><label class="lbl" for="q-name">이름 / 회사·팀명<span class="req">*</span></label><input class="in" id="q-name" name="name" value="${esc(f.name)}" placeholder="김철수 감독 / OO 제작사"></div>
+      <div><label class="lbl" for="q-phone">연락처<span class="req">*</span></label><input class="in" id="q-phone" name="phone" inputmode="tel" value="${esc(f.phone)}" placeholder="010-0000-0000"></div></div></div>
+    <div class="sec"><h3 class="h3">작품 정보</h3><div class="fl" style="margin-top:14px">
+      <div><label class="lbl" for="q-kind">작품 종류</label><select class="in" id="q-kind" name="kind">${["","영화","드라마","광고","뮤직비디오","기타"].map(k=>`<option ${f.kind===k?"selected":""}>${k}</option>`).join("")}</select></div>
+      <div><label class="lbl" for="q-memo">요청 사항</label><textarea class="in" id="q-memo" name="memo" placeholder="장면 설명, 필요한 소품 등">${esc(f.memo)}</textarea></div></div></div>
+    <div class="sec" id="calc">${calcBlock(q)}</div>
+    <label class="chk" style="margin-top:14px;border:0"><input type="checkbox" id="q-agree" name="agree" ${f.agree?"checked":""}><span style="font-size:13px">취소 규정과 이용 기준에 동의합니다 <button type="button" data-act="terms" class="sub" style="text-decoration:underline">보기</button></span></label>
+    <p class="err" id="qerr"></p>
+    <div class="sumbar"><div class="row"><span class="sub">결제 금액 (VAT 포함)</span><b class="num" id="qtotal" style="font-size:17px">${items.length&&!q.blocked.length?won(q.total):"-"}</b></div>
+      <button class="btn pri" ${items.length?"":"disabled"}>결제하기</button></div>
+  </form>`;
+}
+function calcBlock(q){
+  if(!q.lines.length&&!q.blocked.length) return `<h3 class="h3">결제 금액</h3><p class="sub small" style="margin:10px 0 0">차량을 담으면 금액이 계산돼요.</p>`;
+  return `<h3 class="h3">결제 금액</h3>
+  <table class="tbl"><tbody>${q.lines.map(g=>g.lines.map(([k,v],j)=>`<tr><th style="${j?"padding-left:10px":"color:var(--fg)"}">${esc(k)}</th><td>${won(Math.round(v*10000))}</td></tr>`).join("")).join("")}
+  <tr><th>공급가액</th><td>${won(q.supply)}</td></tr><tr><th>부가세 10%</th><td>${won(q.vat)}</td></tr>
+  <tr><th style="color:var(--fg);font-weight:700">합계</th><td style="font-weight:700;font-size:16px">${won(q.total)}</td></tr></tbody></table>
+  ${q.blocked.length?`<p class="err">${esc(q.blocked.join(", "))}은(는) 금액 협의 차량이라 카카오톡 상담 후 결제할 수 있어요.</p>`:""}
+  <p class="note">초과 km, 견인 거리, 주차비·통행료는 촬영 후 실비로 따로 정산됩니다.</p>`;
+}
+function vPay(){ const b=ui.pending; if(!b) return hdr("결제");
+  return `${hdr("결제",{line:true})}<div class="pad">
+    <div style="padding-top:18px"><span class="small sub">${esc(b.date)} · ${esc(b.place)}</span><div style="font-size:15px;margin-top:2px">${esc(b.carNames.join(", "))}</div></div>
+    <div class="row" style="padding-block:18px;border-bottom:1px solid var(--line)"><span>결제 금액</span><b class="num" style="font-size:22px">${won(b.total)}</b></div>
+    <div class="sec"><h3 class="h3">결제 수단</h3><div style="margin-top:6px">${PAY_METHODS.map(m=>`<label class="chk"><input type="radio" name="pm" value="${m}" ${ui.pm===m?"checked":""}><span>${m}</span></label>`).join("")}</div></div>
+    ${ui.pm==="계좌이체"?`<p class="note">입금 계좌는 결제 후 문자로 안내됩니다.</p>`:""}
+    <p class="note">시안 화면입니다. 실제 결제는 이루어지지 않습니다.</p>
+    <p class="err" id="payerr"></p>
+    <div class="sumbar"><button class="btn pri" data-act="paynow">${won(b.total)} 결제하기</button></div></div>`; }
+function vDone(){ const b=db.quotes.at(-1);
+  return `${hdr("예약 완료",{line:true})}<div class="pad" style="padding-top:40px;text-align:center">
+    <p style="font-size:20px;font-weight:700;margin:0">예약이 접수됐어요</p>
+    <p class="sub" style="margin:8px 0 0">예약번호 <b class="num">${esc(b?.no||"")}</b></p>
+    <p class="sub small" style="margin:4px 0 24px">${esc(b?.date||"")} · ${esc(b?.method||"")} · ${b?won(b.total):""}</p>
+    <button class="btn pri" data-tab="me">예약 내역 보기</button><div style="height:10px"></div>${kakaoBanner()}</div>`; }
+function vMakeForm(){ const f=ui.mform;
+  return `<form class="pad" id="mform" novalidate>
+    <p class="sub" style="margin:18px 0 0;font-size:14px;line-height:1.6">목록에 없는 차량 섭외, 촬영용 차량 제작, 올드카 복원이 필요하면 남겨주세요.</p>
+    <div class="sec"><h3 class="h3">문의 종류</h3><div class="opts" style="margin-top:12px">${MAKE_CATS.map(k=>`<button type="button" data-mcat="${k}" aria-pressed="${f.cats.includes(k)}">${k}</button>`).join("")}</div></div>
+    <div class="sec"><h3 class="h3">필요한 차량</h3><div class="fl" style="margin-top:14px">
+      <div><label class="lbl" for="m-model">차종 또는 명칭</label><input class="in" id="m-model" value="${esc(f.model)}" placeholder="1970년대 픽업트럭"></div>
+      <div class="f2"><div><label class="lbl" for="m-era">연식·시대</label><input class="in" id="m-era" value="${esc(f.era)}" placeholder="90년대"></div>
+      <div><label class="lbl" for="m-color">색상</label><input class="in" id="m-color" value="${esc(f.color)}" placeholder="무광 블랙"></div></div>
+      <div><span class="lbl">참고 이미지</span><label class="up" style="margin-top:0">${f.img?`<img src="${f.img}" alt="참고 이미지">`:`${ic(IC.upload)} 이미지 올리기`}<input type="file" id="m-img" accept="image/*"></label></div>
+      <div><label class="lbl" for="m-memo">내용</label><textarea class="in" id="m-memo" placeholder="촬영 일정, 장면 설명, 필요한 작업">${esc(f.memo)}</textarea></div></div></div>
+    <div class="sec"><h3 class="h3">연락처</h3><div class="fl" style="margin-top:14px">
+      <div><label class="lbl" for="m-name">이름 / 회사<span class="req">*</span></label><input class="in" id="m-name" value="${esc(f.name)}"></div>
+      <div><label class="lbl" for="m-phone">연락처<span class="req">*</span></label><input class="in" id="m-phone" inputmode="tel" value="${esc(f.phone)}" placeholder="010-0000-0000"></div></div></div>
+    <p class="err" id="merr"></p>
+    <div class="sumbar"><button class="btn pri">제작 문의 보내기</button></div>
+  </form>`;
+}
+function vCall(){ return `<div class="pad" style="padding-top:12px">
+    <div class="copy"><span><span class="small muted">대표 전화</span><br><b class="num">${esc(CONTACT.phone)}</b></span><button class="btn out sm" data-copy="${esc(CONTACT.phone)}">번호 복사</button></div>
+    <div class="copy"><span><span class="small muted">카카오톡 채널</span><br><b>24시 실시간 상담</b></span><a class="btn out sm" href="${KAKAO_URL}" target="_blank" rel="noopener">열기</a></div></div>`; }
+
+function vMe(){ const mine=db.quotes.slice().reverse();
+  return `${hdr("내정보")}
+  <div class="pad">
+    <div style="padding-top:8px"><div class="row"><h3 class="h3">예약 내역</h3><span class="small muted">${mine.length}건</span></div>
+      ${mine.length?mine.slice(0,5).map(q=>`<div class="qrow"><div class="row"><span class="muted num">${esc(q.created)}</span><span class="state">${esc(q.status)}</span></div><div class="row" style="margin-top:3px;font-size:14px"><span>${esc(q.no||"")}</span><b class="num">${q.total?won(q.total):""}</b></div>
+        <div style="margin-top:3px">${esc(q.cars.map(id=>car(id)?.name).filter(Boolean).join(", "))}</div><div class="small sub">${esc(q.date)} · ${esc(q.place)}</div></div>`).join("")
+      :`<p class="sub small" style="padding:14px 0;margin:0;border-bottom:1px solid var(--line)">예약 내역이 없어요.</p>`}</div>
+    ${db.designs.length?`<div class="sec"><h3 class="h3">저장한 시안</h3><div class="hs">${db.designs.map((d,i)=>{const c=car(d.car); return c?`<button class="hcard" data-loaddesign="${i}"><span class="ph" style="aspect-ratio:4/3">${studio(c,d)}</span><span class="nm" style="font-size:13px">${esc(c.name)}</span><span class="lab">${esc(designSummary(d).join(", "))}</span></button>`:""}).join("")}</div></div>`:""}
+    <ul class="menu sec">
+      <li><button data-act="cart"><span>예약함</span><em>${db.cart.length||""}</em>${ic(IC.right)}</button></li>
+      <li><button data-act="favs"><span>찜한 차량</span><em>${db.favs.length}</em>${ic(IC.right)}</button></li>
+      <li><button data-act="terms"><span>이용 기준</span>${ic(IC.right)}</button></li>
+      <li><a href="${KAKAO_URL}" target="_blank" rel="noopener"><span>카카오톡 상담</span>${ic(IC.right)}</a></li>
+      <li><button data-act="admin"><span>관리자</span>${ic(IC.right)}</button></li>
+    </ul>
+  </div><div style="height:24px"></div>`;
+}
+function vFavs(){ const r=db.cars.filter(c=>db.favs.includes(c.id)); return `${hdr("찜한 차량",{line:true})}<div class="pad">${r.length?r.map(lrow).join(""):`<p class="empty">찜한 차량이 없어요.</p>`}</div>`; }
+
+function vAdmin(){ const now=new Date(), sun=new Date(now); sun.setDate(now.getDate()-now.getDay());
+  const days=[...Array(7)].map((_,i)=>{const d=new Date(sun); d.setDate(sun.getDate()+i); return d;}), iso=d=>d.toLocaleDateString("sv-SE");
+  const bk=new Map(); db.quotes.filter(q=>q.status!=="취소·환불").forEach(q=>(q.items||[]).flatMap(it=>(it.days||[]).map(d=>d.date)).forEach(dt=>bk.set(dt,(bk.get(dt)||0)+1)));
+  return `${hdr("관리자",{line:true})}
+  <div class="pad">
+    <div style="padding-top:18px"><h3 class="h3">이번 주 촬영</h3>
+      <div class="week">${days.map(d=>`<div><small>${"일월화수목금토"[d.getDay()]}</small><div class="d num ${iso(d)===iso(now)?"today":""}">${d.getDate()}</div><i>${bk.has(iso(d))?bk.get(iso(d))+"건":""}</i></div>`).join("")}</div></div>
+    <div class="sec"><div class="row"><h3 class="h3">예약·결제</h3><span class="small muted">${db.quotes.length}건</span></div>
+      ${db.quotes.length?[...db.quotes].reverse().map(q=>`<div class="aq"><div class="tx">${esc(q.client)} · ${esc(q.phone)}<p>${esc(q.date)} ${esc(q.time||"")} · ${esc(q.place)}</p><p>${esc(q.cars.map(id=>car(id)?.name).filter(Boolean).join(", "))}</p><p style="color:var(--fg)">${q.total?won(q.total)+" · "+esc(q.method||""):""}</p></div>
+        <select data-qstat="${q.id}" aria-label="진행 상태">${["결제 완료","배차 확정","촬영 완료","취소·환불"].map(s=>`<option ${q.status===s?"selected":""}>${s}</option>`).join("")}</select></div>`).join("")
+      :`<p class="sub small" style="padding:12px 0;margin:0">아직 들어온 예약이 없어요.</p>`}</div>
+    ${db.consults.length?`<div class="sec"><h3 class="h3">차량제작문의</h3>${[...db.consults].reverse().map(m=>`<div class="qrow"><b>${esc(m.model||"차종 미정")}</b> <span class="small sub">${esc(m.cats.join(", "))}</span><div class="small sub">${esc(m.name)} · ${esc(m.phone)} · ${esc(m.created)}</div></div>`).join("")}</div>`:""}
+    <div class="sec"><div class="row"><h3 class="h3">차량·금액 관리 <span class="muted num">${db.cars.length}</span></h3><button class="btn pri sm" data-act="newcar">차량 등록</button></div>
+      ${db.cars.map(c=>`<button class="mini" data-edit="${c.id}"><span class="ph">${studio(c)}</span><span class="tx">${esc(c.name)}<small>${esc(catLabel(c.cat))} · ${esc(c.sub)} · ${man(c.rent)}</small></span></button>`).join("")}</div>
+    <div class="sec"><button class="btn out" data-act="reset">단가표 원본으로 되돌리기</button><button class="btn out" style="margin-top:8px" data-act="logout">관리자 나가기</button></div>
+  </div><div style="height:24px"></div>`;
+}
+
+function sheet(h){ const m=$("#modal"); m.innerHTML=`<div class="sheet" role="dialog" aria-modal="true">${h}</div>`; m.hidden=false; document.body.style.overflow="hidden"; }
+function closeSheet(){ $("#modal").hidden=true; $("#modal").innerHTML=""; document.body.style.overflow=""; }
+const sheetTop = t => `<header class="hd pad line"><h1>${t}</h1><button class="ib" data-close aria-label="닫기">${ic(IC.close)}</button></header>`;
+function pinSheet(){ sheet(`${sheetTop("관리자")}<form class="pad" id="pinForm" style="padding-top:18px"><label class="lbl" for="pinIn">비밀번호 4자리 (시안용 0000)</label><input class="in num" id="pinIn" inputmode="numeric" maxlength="4" autocomplete="off" style="letter-spacing:.4em;text-align:center;font-size:20px"><p class="err" id="pinErr"></p><button class="btn pri">확인</button></form>`);
+  $("#pinIn").focus();
+  $("#pinForm").onsubmit=e=>{e.preventDefault(); if($("#pinIn").value===ADMIN_PIN){ui.admin=true;closeSheet();push({type:"admin"});} else $("#pinErr").textContent="비밀번호가 맞지 않아요.";}; }
+let draft=[];
+function carSheet(id){ const c=id?car(id):{cat:"prop",sub:"",body:"sedan"};
+  draft=[...(c.photos||[])];
+  sheet(`${sheetTop(id?"차량 수정":"차량 등록")}<form class="pad fl" id="carForm" style="padding-top:18px">
+    <div><label class="lbl" for="f-name">차종<span class="req">*</span></label><input class="in" id="f-name" name="name" required value="${esc(c.name)}"></div>
+    <div class="f2"><div><label class="lbl" for="f-cat">카테고리</label><select class="in" id="f-cat" name="cat">${CAR_CATS.map(x=>`<option value="${x.id}" ${x.id===c.cat?"selected":""}>${esc(x.label)}</option>`).join("")}</select></div>
+    <div><label class="lbl" for="f-sub">구분</label><input class="in" id="f-sub" name="sub" value="${esc(c.sub)}" placeholder="국산 중형"></div></div>
+    <div class="f2"><div><label class="lbl" for="f-rent">대여료 (만원)</label><input class="in" id="f-rent" name="rent" type="number" min="0" value="${esc(c.rent)}" placeholder="비우면 협의"></div>
+    <div><label class="lbl" for="f-single">일회성 대여 (만원)</label><input class="in" id="f-single" name="single" type="number" min="0" value="${esc(typeof c.single==="number"?c.single:"")}"></div></div>
+    <div class="f2"><div><label class="lbl" for="f-km">초과 km당</label><input class="in" id="f-km" name="km" value="${esc(c.km)}" placeholder="500원"></div>
+    <div><label class="lbl" for="f-hours">기본 시간</label><input class="in" id="f-hours" name="hours" value="${esc(c.hours||"6시간")}"></div></div>
+    <div><span class="lbl">사진 (배경 없는 누끼 PNG 권장, 첫 장이 대표)</span><div class="pics" id="pics"></div><input type="file" id="f-photos" accept="image/*" multiple style="margin-top:10px"></div>
+    <div><label class="lbl" for="f-body">사진 없을 때 모양</label><select class="in" id="f-body" name="body">${[["sedan","세단"],["small","경차"],["suv","SUV"],["van","승합"],["truck","트럭"],["bus","버스"],["super","스포츠카"],["classic","클래식"],["taxi","택시"],["police","경찰차"],["ambulance","구급차"],["bike","오토바이"]].map(([v,l])=>`<option value="${v}" ${v===c.body?"selected":""}>${l}</option>`).join("")}</select></div>
+    <p class="err" id="delMsg" style="margin:0"></p>
+    <div style="display:flex;gap:8px">${id?`<button type="button" class="btn out" id="delBtn" style="width:96px;color:#d33">삭제</button>`:""}<button class="btn pri">저장</button></div></form>`);
+  const draw=()=>{ $("#pics").innerHTML=draft.map((p,i)=>`<div class="pic"><img src="${p}" alt="사진 ${i+1}"><button type="button" data-rm="${i}" aria-label="사진 ${i+1} 빼기">✕</button></div>`).join("")||`<span class="small muted">사진 없음</span>`;
+    $("#pics").querySelectorAll("[data-rm]").forEach(b=>b.onclick=()=>{draft.splice(+b.dataset.rm,1);draw();}); }; draw();
+  $("#f-photos").onchange=async e=>{ for(const f of e.target.files) draft.push(await shrink(f,1200)); e.target.value=""; draw(); };
+  $("#carForm").onsubmit=e=>{ e.preventDefault(); const d=Object.fromEntries(new FormData(e.target));
+    d.rent=d.rent===""?null:Number(d.rent); d.single=d.single===""?null:Number(d.single); d.photos=draft;
+    if(id) Object.assign(car(id),d); else db.cars.unshift({id:"n"+Date.now(),...d});
+    if(save()){ closeSheet(); render(); toast(id?"수정했어요":"등록했어요"); } };
+  let armed=false; if(id) $("#delBtn").onclick=()=>{ if(!armed){armed=true;$("#delBtn").textContent="한 번 더";$("#delMsg").textContent="한 번 더 누르면 삭제돼요.";return;}
+    db.cars=db.cars.filter(x=>x.id!==id); db.cart=db.cart.filter(x=>x.car!==id); save(); closeSheet(); if(ui.stack.at(-1)?.type==="detail") ui.stack.pop(); render(); toast("삭제했어요"); };
+}
+function shrink(file,max){ return new Promise(res=>{ const r=new FileReader(); r.onload=()=>{ const im=new Image(); im.onload=()=>{ const s=Math.min(1,max/im.width), cv=document.createElement("canvas"); cv.width=im.width*s; cv.height=im.height*s; cv.getContext("2d").drawImage(im,0,0,cv.width,cv.height); res(cv.toDataURL(file.type==="image/png"?"image/png":"image/jpeg",.82)); }; im.src=r.result; }; r.readAsDataURL(file); }); }
+
+function buildItem(id,design){ const prev=db.cart.find(x=>x.car===id);
+  if(!design){ const d={color:ui.color,logo:ui.dl.logo,text:ui.dl.text,opts:[]}; const it={days:structuredClone(ui.dl.days),svc:[...ui.dl.svc],memo:ui.dl.memo,mode:ui.dl.mode,night:ui.dl.night,hours:ui.dl.hours,nights:ui.dl.nights,meals:ui.dl.meals,opts:[...ui.dl.opts],car:id,options:designSummary(d),design:(d.color||d.logo||d.text)?d:null}; return it; } const it={mode:prev?.mode||"rent",hours:prev?.hours||baseHours(car(id)),night:prev?.night,nights:prev?.nights||0,meals:prev?.meals||0,opts:prev?.opts||[],car:id,options:design?designSummary(design):(ui.color?designSummary({color:ui.color}):[]),design:design?{...design}:(ui.color?{color:ui.color}:null)}; return it; }
+function addCart(id,design){ const it=buildItem(id,design); const i=db.cart.findIndex(x=>x.car===id); i>=0?db.cart[i]=it:db.cart.push(it); save(); }
+const bookList=()=>ui.direct||db.cart;
+function bind(){
+  const q=$("#q"); if(q) q.oninput=e=>{ ui.q=e.target.value; const r=catList(); $("#list").innerHTML=r.length?r.map(lrow).join(""):`<p class="empty">해당하는 차량이 없어요.</p>`; };
+  const hq=$("#homeq"); if(hq) hq.onkeydown=e=>{ if(e.key==="Enter"&&hq.value.trim()){ ui.q=hq.value; go("category"); } };
+  const so=$("#sort"); if(so) so.onchange=e=>{ ui.sort=e.target.value; render(); };
+  document.querySelectorAll('input[name="pm"]').forEach(r=>r.onchange=()=>{ ui.pm=r.value; render(); });
+  const dlg=$("#dlogo"); if(dlg) dlg.onchange=async e=>{ const f=e.target.files[0]; if(f){ ui.dl.logo=await shrink(f,400); if(!ui.dl.opts.includes("wlogo")&&!ui.dl.opts.includes("wfull")) ui.dl.opts.push("wlogo"); render(); } };
+  const dt2=$("#dtext2"); if(dt2) dt2.oninput=e=>{ ui.dl.text=e.target.value; $("#gal").innerHTML=studio(car(ui.stack.at(-1).id),{color:ui.color,logo:ui.dl.logo,text:ui.dl.text}); };
+  const est=()=>{ const e=$("#dlest"); if(e) e.textContent=dlEstimate(car(ui.stack.at(-1).id)); };
+  document.querySelectorAll("[data-dopt]").forEach(x=>x.onchange=()=>{ const k=x.dataset.dopt; ui.dl.opts=x.checked?[...ui.dl.opts,k]:ui.dl.opts.filter(o=>o!==k); est(); });
+  [["dl-hours","hours"],["dl-nights","nights"],["dl-meals","meals"]].forEach(([id,k])=>{ const el=$("#"+id); if(el) el.oninput=()=>{ ui.dl[k]=Math.max(0,Number(el.value)||0); est(); }; });
+  document.querySelectorAll("[data-dsvc]").forEach(x=>x.onchange=()=>{ const k=x.dataset.dsvc; ui.dl.svc=x.checked?[...ui.dl.svc,k]:ui.dl.svc.filter(o=>o!==k); est(); });
+  document.querySelectorAll("[data-dnight]").forEach(el=>el.onchange=()=>{ ui.dl.days[+el.dataset.dnight].night=el.checked; est(); });
+  document.querySelectorAll("[data-day]").forEach(el=>el.oninput=el.onchange=()=>{ ui.dl.days[+el.dataset.day][el.dataset.f]=el.value; });
+  const dm=$("#dl-memo"); if(dm) dm.oninput=()=>{ ui.dl.memo=dm.value; };
+  const dn=$("#dl-night"); if(dn) dn.onchange=()=>{ ui.dl.night=dn.checked; est(); };
+  const pk=$("#pick"); if(pk) pk.onchange=e=>{ ui.color=e.target.value; render(); };
+  const d=ui.design;
+  const lg=$("#logo"); if(lg) lg.onchange=async e=>{ const f=e.target.files[0]; if(f){ d.logo=await shrink(f,400); render(); } };
+  const dt=$("#dtext"); if(dt) dt.oninput=e=>{ d.text=e.target.value; $("#pv").innerHTML=studio(car(d.car),{color:d.color,logo:d.logo,text:d.text}); };
+  document.querySelectorAll("[data-opt]").forEach(x=>x.onchange=()=>{ const v=x.dataset.opt; d.opts=x.checked?[...d.opts,v]:d.opts.filter(o=>o!==v); });
+  const qf=$("#qform"); if(qf){ const recalc=()=>{ const q=quote(cartItems(),ui.form); $("#calc").innerHTML=calcBlock(q); $("#qtotal").textContent=cartItems().length&&!q.blocked.length?won(q.total):"-"; };
+    qf.oninput=qf.onchange=e=>{ const t=e.target;
+      if(t.dataset.mode!==undefined){ bookList()[+t.dataset.mode].mode=t.value; save(); return recalc(); }
+      if(t.dataset.iopt!==undefined){ const it=bookList()[+t.dataset.iopt]; it.opts=t.checked?[...(it.opts||[]),t.value]:(it.opts||[]).filter(k=>k!==t.value); save(); return recalc(); }
+      if(t.name){ ui.form[t.name]=t.type==="checkbox"?t.checked:t.value; if(["hours","night","nights","meals"].includes(t.name)) recalc(); } };
+    qf.onsubmit=e=>{ e.preventDefault(); const f=ui.form; const miss=[["name","이름/회사명"],["phone","연락처"]].filter(([k])=>!String(f[k]||"").trim()).map(([,l])=>l);
+      const noDate=cartItems().filter(({it})=>!(it.days||[]).length||(it.days||[]).some(d=>!d.date||!String(d.place||"").trim()));
+      if(noDate.length) miss.push(`${noDate.map(x=>x.c.name.split(" · ")[0]).join(", ")}의 촬영 날짜·장소(차량 화면에서 입력)`);
+      if(miss.length){ $("#qerr").textContent=`${miss.join(", ")}을(를) 입력해 주세요.`; return; }
+      const items=cartItems(), q=quote(items,f);
+      if(q.blocked.length){ $("#qerr").textContent="금액 협의 차량은 카카오톡 상담 후 결제할 수 있어요. 해당 차량을 빼고 결제해 주세요."; return; }
+      if(!f.agree){ $("#qerr").textContent="취소 규정과 이용 기준에 동의해 주세요."; return; }
+      ui.pending={...f,date:(()=>{const ds=cartItems().flatMap(x=>(x.it.days||[]).map(d=>d.date)).filter(Boolean).sort(); return ds.length>1?ds[0]+" ~ "+ds.at(-1):ds[0]||"";})(),place:[...new Set(cartItems().flatMap(x=>(x.it.days||[]).filter(d=>d.type!=="wait").map(d=>d.place)).filter(Boolean))].join(", "),items:items.map(x=>({...x.it})),carNames:items.map(x=>x.c.name),lines:q.lines.map(g=>({car:g.car.name,lines:g.lines})),supply:q.supply,vat:q.vat,total:q.total};
+      push({type:"pay"}); }; }
+  const mf=$("#mform"); if(mf){ const f=ui.mform;
+    mf.oninput=e=>{ const k={"m-model":"model","m-era":"era","m-color":"color","m-memo":"memo","m-name":"name","m-phone":"phone"}[e.target.id]; if(k) f[k]=e.target.value; };
+    $("#m-img").onchange=async e=>{ const x=e.target.files[0]; if(x){ f.img=await shrink(x,800); render(); } };
+    mf.onsubmit=e=>{ e.preventDefault(); if(!String(f.name||"").trim()||!String(f.phone||"").trim()){ $("#merr").textContent="이름/회사와 연락처를 입력해 주세요."; return; }
+      db.consults.push({...f,created:new Date().toLocaleDateString("sv-SE")}); ui.mform={cats:["차량 섭외"]}; save(); render(); toast("제작 문의를 보냈어요"); }; }
+  document.querySelectorAll("[data-qstat]").forEach(s=>s.onchange=()=>{ db.quotes.find(x=>x.id===s.dataset.qstat).status=s.value; save(); toast(`“${s.value}”(으)로 바꿨어요`); });
+}
+document.addEventListener("click", e=>{
+  const t=e.target.closest("button"); if(!t) return; const ds=t.dataset;
+  if(t.closest("#modal")){ if(ds.close!==undefined) closeSheet(); return; }
+  if(ds.tab) return go(ds.tab);
+  if(ds.act==="back") return back();
+  if(ds.open){ ui.color=null; ui.dl=newDl(car(ds.open)); return push({type:"detail",id:ds.open}); }
+  if(ds.cat){ if(ui.tab==="category"&&!ui.stack.length&&!CATS.find(c=>c.id===ds.cat)?.inquiry){ ui.cat=ds.cat; ui.sub="전체"; ui.q=""; return render(); } return openCat(ds.cat); }
+  if(ds.sub!==undefined){ ui.sub=ds.sub; return render(); }
+  if(ds.color!==undefined){ ui.color=ds.color||null; const v=ui.stack.at(-1);  document.querySelectorAll("[data-color]").forEach(b=>b.getAttribute("aria-pressed")!==null&&b.setAttribute("aria-pressed",b.dataset.color===ui.color)); return render(); }
+  if(ds.dcolor){ ui.design.color=ui.design.color===ds.dcolor?null:ds.dcolor; return render(); }
+  if(ds.fav){ const i=db.favs.indexOf(ds.fav); i>=0?db.favs.splice(i,1):db.favs.push(ds.fav); save(); render(); return toast(i>=0?"찜을 해제했어요":"찜했어요"); }
+  if(ds.addcart){ addCart(ds.addcart); render(); return toast("예약함에 담았어요"); }
+  if(ds.book){ if(car(ds.book).rent==null){ ui.inq="call"; return go("inquiry"); } ui.direct=[buildItem(ds.book)]; return push({type:"book"}); }
+  if(ds.customize){ ui.design={car:ds.customize,color:ui.color,logo:null,text:"",opts:[]}; ui.dtab="wrap"; return push({type:"design"}); }
+  if(ds.dtab){ ui.dtab=ds.dtab; return render(); }
+  if(ds.dtype){ const [i,ty]=ds.dtype.split(":"); ui.dl.days[+i].type=ty; return rerenderKeep(); }
+  if(ds.rmday){ ui.dl.days.splice(+ds.rmday,1); return rerenderKeep(); }
+  if(ds.dmode){ ui.dl.mode=ds.dmode; return render(); }
+  if(ds.inq){ ui.inq=ds.inq; return render(); }
+  if(ds.rmcart){ bookList().splice(+ds.rmcart,1); save(); return render(); }
+  if(ds.kind){ ui.form.kind=ui.form.kind===ds.kind?null:ds.kind; return render(); }
+  if(ds.mcat){ const f=ui.mform; f.cats=f.cats.includes(ds.mcat)?f.cats.filter(x=>x!==ds.mcat):[...f.cats,ds.mcat]; return render(); }
+  if(ds.loaddesign){ ui.design=structuredClone(db.designs[+ds.loaddesign]); ui.dtab="wrap"; return push({type:"design"}); }
+  if(ds.edit) return carSheet(ds.edit);
+  if(ds.copy){ const v=ds.copy; try{ navigator.clipboard.writeText(v).then(()=>toast("복사했어요"),()=>toast("길게 눌러 복사해 주세요")); }catch(_){ toast("길게 눌러 복사해 주세요"); } return; }
+  switch(ds.act){
+    case "addday": { const last=ui.dl.days.at(-1); let nd=""; if(last?.date){ const d=new Date(last.date); d.setDate(d.getDate()+1); nd=d.toLocaleDateString("sv-SE"); } ui.dl.days.push({date:nd,type:"shoot",place:last?.place||"",time:last?.time||""}); return rerenderKeep(); }
+    case "terms": return push({type:"terms"});
+    case "paynow": { const b=ui.pending; if(!b) return; const no="DV"+new Date().toISOString().slice(2,10).replace(/-/g,"")+"-"+String(db.quotes.length+1).padStart(3,"0");
+      db.quotes.push({id:"q"+Date.now(),no,client:b.name,phone:b.phone,cars:b.items.map(x=>x.car),items:b.items,date:b.date,time:b.time,place:b.place,hours:b.hours,night:!!b.night,kind:b.kind,memo:b.memo,lines:b.lines,supply:b.supply,vat:b.vat,total:b.total,method:ui.pm,status:"결제 완료",created:new Date().toLocaleDateString("sv-SE")});
+      if(ui.direct) ui.direct=null; else db.cart=[]; ui.form={hours:6,nights:0,meals:0}; ui.pending=null; save(); ui.stack=[{type:"done"}]; render(); return scrollTo(0,0); }
+    case "favs": return push({type:"favs"});
+    case "admin": return ui.admin?push({type:"admin"}):pinSheet();
+    case "logout": ui.admin=false; return go("me");
+    case "newcar": return carSheet(null);
+    case "rmdlogo": ui.dl.logo=null; return render();
+    case "rmlogo": ui.design.logo=null; return render();
+    case "savedesign": db.designs.unshift(structuredClone(ui.design)); if(save()) toast("내정보에 저장했어요"); return;
+    case "designquote": ui.direct=[buildItem(ui.design.car,ui.design)]; return push({type:"book"});
+    case "cart": ui.direct=null; return push({type:"book"});
+    case "addmore": return go("category");
+    case "reset": if(ds.armed){ Object.assign(db,fresh()); save(); render(); return toast("단가표 원본으로 되돌렸어요"); } t.dataset.armed="1"; t.textContent="한 번 더 누르면 수정 내용이 모두 지워져요"; return;
+  }
+});
+$("#modal").addEventListener("click", e=>{ if(e.target.id==="modal") closeSheet(); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape"&&!$("#modal").hidden) closeSheet(); });
+render();
+</script>
